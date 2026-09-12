@@ -2,7 +2,11 @@
   "meta": {
     "version": "RVR1960",
     "versionName": "Reina-Valera 1960",
-    "language": "es"
+    "language": "es",
+    "testament": "NT",
+    "testamentName": "New Testament",
+    "totalBookChapters": 21,
+    "totalChapterVerses": 36
   },
   "passage": {
     "bookCode": "JHN",

@@ -5,24 +5,136 @@
     "language": "es",
     "testament": "NT",
     "testamentName": "New Testament",
-    "totalBookChapters": 21,
-    "totalChapterVerses": 36
-  },
-  "passage": {
     "bookCode": "JHN",
     "bookName": "Juan",
-    "chapter": 3,
-    "sectionTitle": "De tal manera amó Dios al mundo",
-    "ideas": ["Amor divino", "Salvación", "Vida eterna", "Fe"],
-    "verses": [
-      {
-        "number": 16,
-        "text": "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."
-      },
-      {
-        "number": 17,
-        "text": "Porque no envió Dios a su Hijo al mundo para condenar al mundo, sino para que el mundo sea salvo por él."
-      }
-    ]
-  }
+    "totalBookChapters": 21
+  },
+  "chapters": [
+    {
+      "chapter": 1,
+      "sectionTitle": "El Verbo hecho carne y el testimonio de Juan",
+      "ideas": ["Encarnación", "Luz y tinieblas", "Testimonio", "Primeros discípulos"],
+      "totalVerses": 51
+    },
+    {
+      "chapter": 2,
+      "sectionTitle": "Las bodas de Caná y la purificación del templo",
+      "ideas": ["Primer milagro", "Transformación", "Celo por la casa de Dios", "Señales"],
+      "totalVerses": 25
+    },
+    {
+      "chapter": 3,
+      "sectionTitle": "El nuevo nacimiento y el amor de Dios al mundo",
+      "ideas": ["Nuevo nacimiento", "Amor divino", "Salvación", "Vida eterna"],
+      "totalVerses": 36
+    },
+    {
+      "chapter": 4,
+      "sectionTitle": "La mujer samaritana y el agua de vida",
+      "ideas": ["Agua viva", "Adoración en espíritu y verdad", "Evangelismo", "Fe"],
+      "totalVerses": 54
+    },
+    {
+      "chapter": 5,
+      "sectionTitle": "La sanidad en Betesda y la autoridad del Hijo",
+      "ideas": ["Sanidad en día de reposo", "Autoridad divina", "Testimonio del Padre", "Juicio"],
+      "totalVerses": 47
+    },
+    {
+      "chapter": 6,
+      "sectionTitle": "La alimentación de los 5,000 y el Pan de Vida",
+      "ideas": ["Multiplicación", "Pan de vida", "Palabras de vida eterna", "Provisión"],
+      "totalVerses": 71
+    },
+    {
+      "chapter": 7,
+      "sectionTitle": "Jesús en la fiesta de los tabernáculos",
+      "ideas": ["Ríos de agua viva", "Enseñanza divina", "División por Jesús", "Espíritu Santo"],
+      "totalVerses": 53
+    },
+    {
+      "chapter": 8,
+      "sectionTitle": "La luz del mundo y la verdad que hace libre",
+      "ideas": ["Perdón", "Luz del mundo", "Verdad y libertad", "Preexistencia de Cristo"],
+      "totalVerses": 59
+    },
+    {
+      "chapter": 9,
+      "sectionTitle": "La sanidad del ciego de nacimiento",
+      "ideas": ["Ceguera espiritual", "Revelación", "Fe inquebrantable", "Testimonio"],
+      "totalVerses": 41
+    },
+    {
+      "chapter": 10,
+      "sectionTitle": "El Buen Pastor y la unidad con el Padre",
+      "ideas": ["El Buen Pastor", "Protección", "Unidad divina", "Vida en abundancia"],
+      "totalVerses": 42
+    },
+    {
+      "chapter": 11,
+      "sectionTitle": "La resurrección de Lázaro",
+      "ideas": ["Resurrección y vida", "Compasión", "Poder sobre la muerte", "Gloria de Dios"],
+      "totalVerses": 57
+    },
+    {
+      "chapter": 12,
+      "sectionTitle": "La unción en Betania y la entrada triunfal",
+      "ideas": ["Adoración sacrificial", "Entrada triunfal", "El grano de trigo", "Glorificación"],
+      "totalVerses": 50
+    },
+    {
+      "chapter": 13,
+      "sectionTitle": "El lavatorio de pies y el nuevo mandamiento",
+      "ideas": ["Servicio", "Humildad", "Amor fraternal", "Traición"],
+      "totalVerses": 38
+    },
+    {
+      "chapter": 14,
+      "sectionTitle": "El camino al Padre y la promesa del Consolador",
+      "ideas": ["El Camino, la Verdad y la Vida", "El Espíritu Santo", "Paz", "Moradas celestiales"],
+      "totalVerses": 31
+    },
+    {
+      "chapter": 15,
+      "sectionTitle": "La vid verdadera y el amor de los discípulos",
+      "ideas": ["Permanencia", "Fruto abundante", "Amistad con Dios", "Oposición del mundo"],
+      "totalVerses": 27
+    },
+    {
+      "chapter": 16,
+      "sectionTitle": "La obra del Espíritu Santo y la victoria sobre el mundo",
+      "ideas": ["Consolador", "Convicción de pecado", "Gozo en la aflicción", "Victoria sobre el mundo"],
+      "totalVerses": 33
+    },
+    {
+      "chapter": 17,
+      "sectionTitle": "La oración sacerdotal e intercesora de Jesús",
+      "ideas": ["Unidad de los creyentes", "Santificación", "Gloria compartida", "Oración de protección"],
+      "totalVerses": 26
+    },
+    {
+      "chapter": 18,
+      "sectionTitle": "Arresto, juicio y negaciones de Pedro",
+      "ideas": ["Soberanía en la prueba", "Reino no terrenal", "Juicio ante Pilato", "Fidelidad"],
+      "totalVerses": 40
+    },
+    {
+      "chapter": 19,
+      "sectionTitle": "Crucifixión, muerte y sepultura",
+      "ideas": ["Sacrificio supremo", "Consumado es", "Cumplimiento profético", "Redención"],
+      "totalVerses": 42
+    },
+    {
+      "chapter": 20,
+      "sectionTitle": "La resurrección y apariciones a los discípulos",
+      "ideas": ["Tumba vacía", "Resurrección", "Fe sin ver", "Gran Comisión"],
+      "totalVerses": 31
+    },
+    {
+      "chapter": 21,
+      "sectionTitle": "La pesca milagrosa y la restauración de Pedro",
+      "ideas": ["Restauración pastoral", "Cuidado del rebaño", "Seguimiento", "Provisión en la pesca"],
+      "totalVerses": 25
+    }
+  ]
 }

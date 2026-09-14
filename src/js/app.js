@@ -10,7 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     verseSelect: document.getElementById('verseSelect'),
     statusBanner: document.getElementById('statusBanner'),
     themeToggle: document.getElementById('themeToggle'),
-    passageDisplay: document.getElementById('passageDisplay')
+    passageDisplay: document.getElementById('passageDisplay'),
+    scopeFilter: document.getElementById('scopeFilter'),
+    badgeAll: document.getElementById('badgeAll'),
+    badgeOT: document.getElementById('badgeOT'),
+    badgeNT: document.getElementById('badgeNT')
   };
 
   // Detenemos la ejecución si faltan nodos estructurales clave
@@ -21,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let booksList = [];
   let booksMap = new Map(); // Indexación O(1) para búsqueda rápida de libros por ID/código
+  let currentScope = 'ALL'; // Estado global del filtro de ámbito ('ALL' | 'OT' | 'NT')
   const DEFAULT_VERSE_FALLBACK = 50;
 
   // ==========================================
@@ -78,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       booksMap = new Map(rawBooks.map(b => [b.id || b.code, b]));
       booksList = Array.from(booksMap.values());
 
+      updateBadgeCounts();
       clearStatus();
       populateBooks();
 
@@ -87,30 +93,83 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Actualiza los contadores de las etiquetas en los botones de ámbito
+  function updateBadgeCounts() {
+    const otCount = booksList.filter(b => b.testament === 'OT').length;
+    const ntCount = booksList.filter(b => b.testament === 'NT').length;
+
+    if (elements.badgeAll) elements.badgeAll.textContent = booksList.length;
+    if (elements.badgeOT) elements.badgeOT.textContent = otCount;
+    if (elements.badgeNT) elements.badgeNT.textContent = ntCount;
+  }
+
   // ==========================================
-  // 4. POBLADO Y ACTUALIZACIÓN DE SELECTORES
+  // 4. CONTROLADOR DEL FILTRO DE ÁMBITO (BOTONES)
+  // ==========================================
+  function initScopeFilter() {
+    if (!elements.scopeFilter) return;
+
+    // Delegación de eventos eficiente en el contenedor padre
+    elements.scopeFilter.addEventListener('click', (e) => {
+      const btn = e.target.closest('.scope-btn');
+      if (!btn || !btn.dataset.scope) return;
+
+      const selectedScope = btn.dataset.scope;
+      if (selectedScope === currentScope) return;
+
+      currentScope = selectedScope;
+
+      // Actualización de estado visual e interactivo
+      const scopeBtns = elements.scopeFilter.querySelectorAll('.scope-btn');
+      scopeBtns.forEach(b => {
+        const isActive = b.dataset.scope === currentScope;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      populateBooks();
+    });
+  }
+
+  // ==========================================
+  // 5. POBLADO Y ACTUALIZACIÓN DE SELECTORES
   // ==========================================
   function populateBooks() {
     elements.bookSelect.replaceChildren(new Option('-- Seleccionar Libro --', ''));
 
-    const groupOT = document.createElement('optgroup');
-    groupOT.label = '— Antiguo Testamento —';
-    const groupNT = document.createElement('optgroup');
-    groupNT.label = '— Nuevo Testamento —';
-
-    booksList.forEach(b => {
-      // new Option escapa automáticamente el texto para prevenir XSS
-      const option = new Option(b.name, b.id || b.code);
-
-      if (b.testament === 'OT') groupOT.appendChild(option);
-      else if (b.testament === 'NT') groupNT.appendChild(option);
-      else elements.bookSelect.appendChild(option);
+    // Filtrar la lista de libros según el ámbito activo
+    const filteredBooks = booksList.filter(b => {
+      if (currentScope === 'ALL') return true;
+      return b.testament === currentScope;
     });
 
-    if (groupOT.children.length > 0) elements.bookSelect.appendChild(groupOT);
-    if (groupNT.children.length > 0) elements.bookSelect.appendChild(groupNT);
+    if (currentScope === 'ALL') {
+      const groupOT = document.createElement('optgroup');
+      groupOT.label = '— Antiguo Testamento —';
+      const groupNT = document.createElement('optgroup');
+      groupNT.label = '— Nuevo Testamento —';
 
-    elements.bookSelect.disabled = false;
+      filteredBooks.forEach(b => {
+        const option = new Option(b.name, b.id || b.code);
+        if (b.testament === 'OT') groupOT.appendChild(option);
+        else if (b.testament === 'NT') groupNT.appendChild(option);
+        else elements.bookSelect.appendChild(option);
+      });
+
+      if (groupOT.children.length > 0) elements.bookSelect.appendChild(groupOT);
+      if (groupNT.children.length > 0) elements.bookSelect.appendChild(groupNT);
+    } else {
+      filteredBooks.forEach(b => {
+        elements.bookSelect.appendChild(new Option(b.name, b.id || b.code));
+      });
+    }
+
+    elements.bookSelect.disabled = filteredBooks.length === 0;
+
+    // Reinicio de selectores dependientes y visor
+    resetSelect(elements.chapterSelect, 'Selecciona un libro');
+    resetSelect(elements.verseSelect, 'Selecciona un capítulo');
+    clearPassageDisplay();
   }
 
   function updateChapters() {
@@ -184,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 5. RENDERIZADO SEGURO EN PANTALLA
+  // 6. RENDERIZADO SEGURO EN PANTALLA
   // ==========================================
   function clearPassageDisplay() {
     if (elements.passageDisplay) {
@@ -248,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 6. MANEJO DE ESTADOS Y BANNERS DE ERROR
+  // 7. MANEJO DE ESTADOS Y BANNERS DE ERROR
   // ==========================================
   function resetSelect(selectEl, placeholder) {
     if (!selectEl) return;
@@ -289,12 +348,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 7. ESCUCHADORES DE EVENTOS
+  // 8. ESCUCHADORES DE EVENTOS E INICIALIZACIÓN
   // ==========================================
   elements.bookSelect.addEventListener('change', updateChapters);
   elements.chapterSelect.addEventListener('change', updateVerses);
   elements.verseSelect.addEventListener('change', renderPassage);
 
-  // Inicialización
+  // Inicializar listeners y carga de datos
+  initScopeFilter();
   loadManifest();
 });

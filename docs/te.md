@@ -109,3 +109,13 @@ OUTPUT:
 </execution_example>
 
 Procesa e inicia la generación inmediata para los parámetros provistos.
+
+-----
+
+BOOK_NAME: Mateo
+BOOK_CODE: MAT
+TOTAL_CHAPTERS: 28
+BATCH_START: 1
+BATCH_END: 5
+
+

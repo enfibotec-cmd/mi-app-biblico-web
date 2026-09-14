@@ -20,6 +20,22 @@
       
       <div id="statusBanner" class="status-banner hidden" aria-live="polite"></div>
 
+      <!-- Bloque de botones para filtrado rápido de testamentos -->
+      <div class="scope-filter-container">
+        <label class="scope-label">Ámbito de búsqueda</label>
+        <div class="scope-btn-group" id="scopeFilter" role="group" aria-label="Filtrar por testamento">
+          <button type="button" class="scope-btn active" data-scope="ALL" aria-pressed="true">
+            Todos <span class="badge" id="badgeAll">66</span>
+          </button>
+          <button type="button" class="scope-btn" data-scope="OT" aria-pressed="false">
+            OT <span class="badge" id="badgeOT">39</span>
+          </button>
+          <button type="button" class="scope-btn" data-scope="NT" aria-pressed="false">
+            NT <span class="badge" id="badgeNT">27</span>
+          </button>
+        </div>
+      </div>
+
       <div class="select-grid">
         <div class="select-group">
           <label for="bookSelect">Libro</label>

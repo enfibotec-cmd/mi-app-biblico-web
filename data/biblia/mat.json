@@ -1,0 +1,868 @@
+{
+  "schema_version": "1.0",
+  "book": {
+    "name": "Mateo",
+    "code": "MAT",
+    "total_chapters": 28,
+    "language": "es",
+    "content_note": "Estructura pedagógica basada en referencias bíblicas, síntesis exegética y diseño instruccional. No incluye citas extensas del texto bíblico."
+  },
+  "batch": {
+    "start": 1,
+    "end": 5,
+    "returned_chapters": 5,
+    "has_more": true,
+    "next_batch_start": 6,
+    "continuation_command": "CONTINUAR"
+  },
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "title": "Genealogía y nacimiento de Jesús",
+      "reference": "Mateo 1",
+      "summary": "Mateo presenta a Jesús como Mesías, hijo de David e hijo de Abraham. La genealogía muestra la continuidad histórica y teológica de la promesa, mientras que el nacimiento de Jesús revela su identidad como Salvador y Emanuel.",
+      "learning_path": {
+        "focus_question": "¿Cómo muestra Mateo que Jesús es el cumplimiento de las promesas hechas a Abraham y a David?",
+        "objectives": [
+          "Identificar la función teológica de la genealogía de Jesús.",
+          "Explicar el significado del nombre Jesús y del título Emanuel.",
+          "Reconocer la obediencia de José como parte del plan divino."
+        ],
+        "prior_knowledge": [
+          "Nociones básicas sobre las promesas a Abraham y David.",
+          "Contexto del pueblo de Israel en el Antiguo Testamento."
+        ],
+        "summary_statement": "Jesús es presentado como el Mesías prometido que salva y permanece con su pueblo."
+      },
+      "structural_outline": [
+        {
+          "reference_range": "Mateo 1:1-17",
+          "title": "Genealogía de Jesús",
+          "summary": "Se presenta la ascendencia de Jesús desde Abraham hasta José, mostrando la continuidad de la promesa mesiánica."
+        },
+        {
+          "reference_range": "Mateo 1:18-25",
+          "title": "Nacimiento de Jesús y obediencia de José",
+          "summary": "José recibe una revelación sobre el origen del niño, obedece al Señor y le da el nombre de Jesús."
+        }
+      ],
+      "themes": [
+        {
+          "id": "MAT-1-T1",
+          "name": "Cumplimiento de la promesa",
+          "description": "Jesús aparece como culminación de la historia salvífica vinculada a Abraham y David."
+        },
+        {
+          "id": "MAT-1-T2",
+          "name": "Identidad mesiánica",
+          "description": "El capítulo presenta a Jesús como Salvador, Cristo y Emanuel."
+        },
+        {
+          "id": "MAT-1-T3",
+          "name": "Obediencia a la revelación",
+          "description": "José responde con fe a la instrucción divina y participa activamente en el plan de Dios."
+        }
+      ],
+      "key_verses": [
+        {
+          "reference": "Mateo 1:1",
+          "topic": "Identidad de Jesús",
+          "pedagogical_note": "Funciona como título teológico del evangelio y punto de partida para leer todo el libro."
+        },
+        {
+          "reference": "Mateo 1:21",
+          "topic": "Misión salvadora",
+          "pedagogical_note": "Ideal para explicar el significado del nombre Jesús y su relación con la salvación."
+        },
+        {
+          "reference": "Mateo 1:23",
+          "topic": "Emanuel",
+          "pedagogical_note": "Útil para conectar presencia divina, encarnación y esperanza."
+        }
+      ],
+      "characters": [
+        {
+          "name": "Jesús",
+          "role": "Mesías prometido",
+          "description": "Es presentado como hijo de David, hijo de Abraham y Salvador."
+        },
+        {
+          "name": "José",
+          "role": "Padre legal de Jesús",
+          "description": "Recibe revelación divina y actúa con obediencia."
+        },
+        {
+          "name": "María",
+          "role": "Madre de Jesús",
+          "description": "Participa en el cumplimiento del anuncio profético."
+        },
+        {
+          "name": "Abraham",
+          "role": "Patriarca",
+          "description": "Punto de partida de la genealogía y de la promesa universal."
+        },
+        {
+          "name": "David",
+          "role": "Rey de Israel",
+          "description": "Figura clave para comprender la filiación real del Mesías."
+        }
+      ],
+      "places": [
+        {
+          "name": "Tierra de Israel",
+          "description": "Marco histórico general del relato de la genealogía y el nacimiento."
+        }
+      ],
+      "theological_emphasis": [
+        "Jesús es el cumplimiento de la historia de Israel.",
+        "La salvación está vinculada al nombre y la misión de Jesús.",
+        "La presencia de Dios se manifiesta en Emanuel."
+      ],
+      "instructional_activities": [
+        {
+          "type": "observación",
+          "prompt": "Observa cómo la genealogía conecta a Jesús con personajes clave de la historia de Israel."
+        },
+        {
+          "type": "análisis",
+          "prompt": "Compara el significado del nombre Jesús con la misión anunciada en el texto."
+        },
+        {
+          "type": "reflexión",
+          "prompt": "Identifica una decisión de José que muestre confianza en la dirección de Dios."
+        }
+      ],
+      "assessment": {
+        "quiz": [
+          {
+            "type": "single_choice",
+            "question": "¿Qué enfatiza Mateo 1 acerca de Jesús?",
+            "options": [
+              "Su descendencia de David y Abraham",
+              "Su ministerio exclusivo en Jerusalén",
+              "Su papel como juez final"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Mateo abre el evangelio presentando a Jesús como hijo de David e hijo de Abraham."
+          },
+          {
+            "type": "single_choice",
+            "question": "¿Qué significa el nombre Jesús según la explicación del capítulo?",
+            "options": [
+              "Dios está con nosotros",
+              "Él salvará a su pueblo",
+              "Rey eterno"
+            ],
+            "correct_answer_index": 1,
+            "feedback": "El nombre Jesús se asocia con salvar, mientras que Emanuel se relaciona con la presencia de Dios."
+          }
+        ],
+        "reflection_prompt": "¿Qué enseña este capítulo sobre la fidelidad de Dios en la historia?",
+        "application_prompt": "Escribe una forma práctica de confiar en la guía de Dios cuando una situación es difícil de entender."
+      },
+      "ux_tags": [
+        "genealogía",
+        "nacimiento",
+        "cumplimiento",
+        "José",
+        "Emanuel"
+      ]
+    },
+    {
+      "chapter_number": 2,
+      "title": "Visita de los magos y protección del niño Jesús",
+      "reference": "Mateo 2",
+      "summary": "Jesús es buscado por magos del oriente que reconocen su realeza, mientras Herodes lo percibe como amenaza. El capítulo combina revelación a las naciones, oposición al Mesías y protección divina mediante la intervención de José.",
+      "learning_path": {
+        "focus_question": "¿Qué revela Mateo 2 sobre la recepción de Jesús por parte de diferentes personas?",
+        "objectives": [
+          "Reconocer la búsqueda de los magos como señal de reconocimiento del Mesías.",
+          "Identificar el contraste entre adoración y oposición.",
+          "Comprender cómo Dios guía y protege a Jesús y a su familia."
+        ],
+        "prior_knowledge": [
+          "Conocimiento básico del contexto de Herodes.",
+          "Nociones sobre peregrinación y regalos simbólicos en el mundo antiguo."
+        ],
+        "summary_statement": "Jesús es adorado por personas de otras naciones, pero también enfrenta oposición desde el inicio."
+      },
+      "structural_outline": [
+        {
+          "reference_range": "Mateo 2:1-12",
+          "title": "Visita de los magos",
+          "summary": "Magos del oriente llegan buscando al rey nacido y lo adoran en Belén."
+        },
+        {
+          "reference_range": "Mateo 2:13-18",
+          "title": "Huida a Egipto y matanza de los niños",
+          "summary": "José es advertido para huir con Jesús y María, mientras Herodes reacciona con violencia."
+        },
+        {
+          "reference_range": "Mateo 2:19-23",
+          "title": "Regreso a Nazaret",
+          "summary": "Tras la muerte de Herodes, José es guiado a establecerse en Nazaret."
+        }
+      ],
+      "themes": [
+        {
+          "id": "MAT-2-T1",
+          "name": "Revelación a las naciones",
+          "description": "Los magos representan a personas no judías que buscan y adoran al Mesías."
+        },
+        {
+          "id": "MAT-2-T2",
+          "name": "Oposición al Mesías",
+          "description": "Herodes encarna la resistencia política y espiritual a Jesús."
+        },
+        {
+          "id": "MAT-2-T3",
+          "name": "Protección divina",
+          "description": "Dios interviene mediante sueños y guía a la familia de Jesús."
+        }
+      ],
+      "key_verses": [
+        {
+          "reference": "Mateo 2:2",
+          "topic": "Búsqueda del rey",
+          "pedagogical_note": "Permite analizar la pregunta central de los magos y su motivación espiritual."
+        },
+        {
+          "reference": "Mateo 2:11",
+          "topic": "Adoración y ofrendas",
+          "pedagogical_note": "Útil para estudiar la respuesta correcta ante Jesús como rey."
+        },
+        {
+          "reference": "Mateo 2:15",
+          "topic": "Cumplimiento profético",
+          "description": "Conecta el regreso de Egipto con la historia de Israel.",
+          "pedagogical_note": "Sirve para explicar cómo Mateo interpreta los eventos de Jesús a la luz de las Escrituras."
+        }
+      ],
+      "characters": [
+        {
+          "name": "Jesús",
+          "role": "Niño rey",
+          "description": "Es buscado por los magos y protegido por Dios."
+        },
+        {
+          "name": "José",
+          "role": "Protector de Jesús y María",
+          "description": "Obedece las advertencias divinas y guía a la familia."
+        },
+        {
+          "name": "María",
+          "role": "Madre de Jesús",
+          "description": "Acompaña a Jesús en la huida y el regreso."
+        },
+        {
+          "name": "Magos del oriente",
+          "role": "Buscadores y adoradores",
+          "description": "Reconocen la señal del nacimiento y ofrecen homenaje."
+        },
+        {
+          "name": "Herodes",
+          "role": "Rey amenazado",
+          "description": "Intenta eliminar al niño por miedo a perder su poder."
+        }
+      ],
+      "places": [
+        {
+          "name": "Belén",
+          "description": "Lugar del nacimiento y de la visita de los magos."
+        },
+        {
+          "name": "Jerusalén",
+          "description": "Centro político y religioso donde Herodes gobierna."
+        },
+        {
+          "name": "Egipto",
+          "description": "Lugar de refugio para Jesús, José y María."
+        },
+        {
+          "name": "Ramá",
+          "description": "Lugar mencionado en relación con el llanto por los niños."
+        },
+        {
+          "name": "Nazaret",
+          "description": "Lugar de residencia de la familia tras el regreso."
+        }
+      ],
+      "theological_emphasis": [
+        "Jesús es reconocido más allá de Israel.",
+        "El poder humano puede oponerse al plan de Dios, pero no lo detiene.",
+        "Dios protege y dirige a quienes participan en su propósito."
+      ],
+      "instructional_activities": [
+        {
+          "type": "comparación",
+          "prompt": "Compara la actitud de los magos con la actitud de Herodes ante Jesús."
+        },
+        {
+          "type": "mapa conceptual",
+          "prompt": "Organiza los lugares del capítulo: Belén, Jerusalén, Egipto y Nazaret."
+        },
+        {
+          "type": "discusión",
+          "prompt": "¿Qué enseñan los regalos de los magos sobre la identidad de Jesús?"
+        }
+      ],
+      "assessment": {
+        "quiz": [
+          {
+            "type": "single_choice",
+            "question": "¿Dónde nació Jesús según Mateo 2?",
+            "options": [
+              "Belén",
+              "Nazaret",
+              "Jericó"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Mateo 2 sitúa el nacimiento de Jesús en Belén de Judea."
+          },
+          {
+            "type": "single_choice",
+            "question": "¿Qué hicieron los magos al encontrar al niño?",
+            "options": [
+              "Lo adoraron y le ofrecieron regalos",
+              "Lo llevaron ante Herodes",
+              "Lo ocultaron en Egipto"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Los magos respondieron con adoración y entrega simbólica."
+          }
+        ],
+        "reflection_prompt": "¿Qué actitudes del corazón humano aparecen en este capítulo ante la presencia de Jesús?",
+        "application_prompt": "Describe una manera concreta de buscar a Jesús con sinceridad y disposición."
+      },
+      "ux_tags": [
+        "magos",
+        "Belén",
+        "Herodes",
+        "Egipto",
+        "adoración"
+      ]
+    },
+    {
+      "chapter_number": 3,
+      "title": "Ministerio de Juan el Bautista y bautismo de Jesús",
+      "reference": "Mateo 3",
+      "summary": "Juan el Bautista prepara el camino del Señor llamando al arrepentimiento. Jesús se presenta para ser bautizado, y la voz del cielo revela su identidad como Hijo amado.",
+      "learning_path": {
+        "focus_question": "¿Cómo prepara Juan el camino para Jesús y qué revela el bautismo sobre la identidad de Jesús?",
+        "objectives": [
+          "Explicar el mensaje de Juan el Bautista.",
+          "Comprender el significado del arrepentimiento como preparación.",
+          "Identificar la revelación de Jesús como Hijo amado en su bautismo."
+        ],
+        "prior_knowledge": [
+          "Concepto de profecía preparatoria.",
+          "Nociones sobre bautismo como señal de arrepentimiento."
+        ],
+        "summary_statement": "Juan prepara el camino con un llamado al arrepentimiento, y Jesús es revelado como Hijo amado de Dios."
+      },
+      "structural_outline": [
+        {
+          "reference_range": "Mateo 3:1-12",
+          "title": "Predicación de Juan el Bautista",
+          "summary": "Juan anuncia la llegada del reino y llama al arrepentimiento con frutos visibles."
+        },
+        {
+          "reference_range": "Mateo 3:13-17",
+          "title": "Bautismo de Jesús",
+          "summary": "Jesús es bautizado por Juan, el Espíritu desciende y la voz del Padre confirma su identidad."
+        }
+      ],
+      "themes": [
+        {
+          "id": "MAT-3-T1",
+          "name": "Arrepentimiento",
+          "description": "El mensaje central de Juan exige un cambio de mente y conducta."
+        },
+        {
+          "id": "MAT-3-T2",
+          "name": "Preparación del camino",
+          "description": "Juan cumple una función profética de preparar al pueblo para Jesús."
+        },
+        {
+          "id": "MAT-3-T3",
+          "name": "Identidad de Jesús",
+          "description": "El bautismo revela a Jesús como Hijo amado y Siervo aprobado."
+        }
+      ],
+      "key_verses": [
+        {
+          "reference": "Mateo 3:2",
+          "topic": "Llamado al arrepentimiento",
+          "pedagogical_note": "Punto de entrada para explicar la preparación espiritual."
+        },
+        {
+          "reference": "Mateo 3:17",
+          "topic": "Hijo amado",
+          "pedagogical_note": "Clave para comprender la identidad de Jesús antes de su ministerio público."
+        }
+      ],
+      "characters": [
+        {
+          "name": "Juan el Bautista",
+          "role": "Precursor",
+          "description": "Anuncia el arrepentimiento y prepara el camino del Señor."
+        },
+        {
+          "name": "Jesús",
+          "role": "Hijo amado",
+          "description": "Se presenta para ser bautizado y es confirmado por el Padre."
+        },
+        {
+          "name": "Fariseos y saduceos",
+          "role": "Oyentes confrontados",
+          "description": "Son llamados a producir frutos dignos de arrepentimiento."
+        }
+      ],
+      "places": [
+        {
+          "name": "Desierto de Judea",
+          "description": "Lugar del ministerio preparatorio de Juan."
+        },
+        {
+          "name": "Río Jordán",
+          "description": "Lugar del bautismo de Jesús."
+        },
+        {
+          "name": "Jerusalén",
+          "description": "Procedencia de algunos oyentes de Juan."
+        }
+      ],
+      "theological_emphasis": [
+        "El arrepentimiento prepara el corazón para recibir a Jesús.",
+        "Jesús se identifica con su pueblo al ser bautizado.",
+        "La Trinidad se manifiesta en el bautismo de Jesús."
+      ],
+      "instructional_activities": [
+        {
+          "type": "análisis de mensaje",
+          "prompt": "Resume el mensaje principal de Juan en una frase."
+        },
+        {
+          "type": "reflexión personal",
+          "prompt": "Identifica qué significa producir frutos dignos de arrepentimiento."
+        },
+        {
+          "type": "estudio teológico",
+          "prompt": "Observa cómo Padre, Hijo y Espíritu aparecen en el bautismo."
+        }
+      ],
+      "assessment": {
+        "quiz": [
+          {
+            "type": "single_choice",
+            "question": "¿Qué proclamaba Juan el Bautista?",
+            "options": [
+              "Arrepentimiento",
+              "Guerra",
+              "Prosperidad material"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Juan llamaba al arrepentimiento como preparación para la llegada del Señor."
+          },
+          {
+            "type": "single_choice",
+            "question": "¿Qué se revela en el bautismo de Jesús?",
+            "options": [
+              "Jesús es el Hijo amado de Dios",
+              "Juan es mayor que Jesús",
+              "Jesús evita el ministerio público"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "La voz del cielo confirma la identidad de Jesús como Hijo amado."
+          }
+        ],
+        "reflection_prompt": "¿De qué manera el arrepentimiento prepara el camino para seguir a Jesús?",
+        "application_prompt": "Escribe una acción concreta que exprese un cambio sincero de actitud."
+      },
+      "ux_tags": [
+        "Juan el Bautista",
+        "bautismo",
+        "arrepentimiento",
+        "Hijo amado"
+      ]
+    },
+    {
+      "chapter_number": 4,
+      "title": "Tentación de Jesús y comienzo de su ministerio",
+      "reference": "Mateo 4",
+      "summary": "Jesús es tentado en el desierto y responde con fidelidad a la Palabra de Dios. Luego inicia su ministerio en Galilea, proclama el reino y llama a sus primeros discípulos.",
+      "learning_path": {
+        "focus_question": "¿Cómo demuestra Jesús fidelidad en la tentación y cómo inicia su ministerio público?",
+        "objectives": [
+          "Analizar la respuesta de Jesús ante cada tentación.",
+          "Comprender el anuncio central del ministerio de Jesús.",
+          "Identificar el llamado de los primeros discípulos."
+        ],
+        "prior_knowledge": [
+          "Contexto del desierto en la historia de Israel.",
+          "Nociones sobre Reino de Dios."
+        ],
+        "summary_statement": "Jesús vence la tentación, anuncia el reino y llama a personas a seguirlo."
+      },
+      "structural_outline": [
+        {
+          "reference_range": "Mateo 4:1-11",
+          "title": "Tentación en el desierto",
+          "summary": "Jesús enfrenta tres tentaciones y responde con la Palabra de Dios."
+        },
+        {
+          "reference_range": "Mateo 4:12-17",
+          "title": "Inicio del ministerio en Galilea",
+          "summary": "Jesús se establece en Capernaúm y comienza a predicar el arrepentimiento y el reino."
+        },
+        {
+          "reference_range": "Mateo 4:18-22",
+          "title": "Llamado de los primeros discípulos",
+          "summary": "Pedro, Andrés, Jacobo y Juan responden al llamado de Jesús."
+        },
+        {
+          "reference_range": "Mateo 4:23-25",
+          "title": "Enseñanza, predicación y sanidad",
+          "summary": "Jesús enseña, anuncia el reino y sana a personas de diversas regiones."
+        }
+      ],
+      "themes": [
+        {
+          "id": "MAT-4-T1",
+          "name": "Fidelidad en la prueba",
+          "description": "Jesús responde a la tentación con obediencia y confianza en Dios."
+        },
+        {
+          "id": "MAT-4-T2",
+          "name": "Reino de Dios",
+          "description": "El anuncio central del ministerio de Jesús es la cercanía del reino."
+        },
+        {
+          "id": "MAT-4-T3",
+          "name": "Discipulado",
+          "description": "Jesús llama a personas comunes a seguirlo y participar en su misión."
+        }
+      ],
+      "key_verses": [
+        {
+          "reference": "Mateo 4:4",
+          "topic": "Vivir por la Palabra",
+          "pedagogical_note": "Clave para enseñar la dependencia espiritual de Jesús."
+        },
+        {
+          "reference": "Mateo 4:17",
+          "topic": "Predicación del reino",
+          "pedagogical_note": "Resume el mensaje central del ministerio público."
+        },
+        {
+          "reference": "Mateo 4:19",
+          "topic": "Llamado al discipulado",
+          "pedagogical_note": "Útil para explicar seguimiento y misión."
+        }
+      ],
+      "characters": [
+        {
+          "name": "Jesús",
+          "role": "Mesías fiel",
+          "description": "Vence la tentación y comienza su ministerio público."
+        },
+        {
+          "name": "Diablo",
+          "role": "Tentador",
+          "description": "Intenta desviar a Jesús de su misión."
+        },
+        {
+          "name": "Pedro",
+          "role": "Discípulo llamado",
+          "description": "Pescador invitado a seguir a Jesús."
+        },
+        {
+          "name": "Andrés",
+          "role": "Discípulo llamado",
+          "description": "Hermano de Pedro y compañero en el llamado."
+        },
+        {
+          "name": "Jacobo",
+          "role": "Discípulo llamado",
+          "description": "Hijo de Zebedeo llamado al seguimiento."
+        },
+        {
+          "name": "Juan",
+          "role": "Discípulo llamado",
+          "description": "Hermano de Jacobo y testigo del ministerio."
+        }
+      ],
+      "places": [
+        {
+          "name": "Desierto",
+          "description": "Lugar de prueba y preparación."
+        },
+        {
+          "name": "Galilea",
+          "description": "Región principal del inicio del ministerio de Jesús."
+        },
+        {
+          "name": "Capernaúm",
+          "description": "Ciudad donde Jesús establece su ministerio."
+        },
+        {
+          "name": "Mar de Galilea",
+          "description": "Lugar del llamado de los primeros discípulos."
+        },
+        {
+          "name": "Decápolis",
+          "description": "Región desde donde personas acuden a Jesús."
+        }
+      ],
+      "theological_emphasis": [
+        "Jesús es el Hijo fiel que no cede ante la tentación.",
+        "El reino de Dios irrumpe en la historia humana.",
+        "El llamado al discipulado implica seguimiento activo."
+      ],
+      "instructional_activities": [
+        {
+          "type": "comparación",
+          "prompt": "Compara las tres tentaciones y las respuestas de Jesús."
+        },
+        {
+          "type": "estudio de personajes",
+          "prompt": "Observa cómo responden Pedro, Andrés, Jacobo y Juan al llamado."
+        },
+        {
+          "type": "síntesis",
+          "prompt": "Resume el mensaje central de Jesús en una frase."
+        }
+      ],
+      "assessment": {
+        "quiz": [
+          {
+            "type": "single_choice",
+            "question": "¿Qué hizo Jesús después de ser tentado?",
+            "options": [
+              "Comenzó a predicar el reino",
+              "Regresó al templo",
+              "Abandonó Galilea"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Tras la tentación, Jesús inicia su ministerio proclamando el reino."
+          },
+          {
+            "type": "single_choice",
+            "question": "¿Cómo respondió Jesús a la tentación?",
+            "options": [
+              "Con la Palabra de Dios",
+              "Con argumentos humanos",
+              "Evitando el conflicto"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Jesús responde a cada tentación citando la Palabra de Dios."
+          }
+        ],
+        "reflection_prompt": "¿Qué enseña este capítulo sobre la relación entre obediencia y misión?",
+        "application_prompt": "Describe una decisión concreta para seguir a Jesús en tu contexto diario."
+      },
+      "ux_tags": [
+        "tentación",
+        "ministerio",
+        "discípulos",
+        "reino",
+        "Galilea"
+      ]
+    },
+    {
+      "chapter_number": 5,
+      "title": "Sermón del monte: bienaventuranzas y ética del reino",
+      "reference": "Mateo 5",
+      "summary": "Jesús enseña desde el monte a sus discípulos y multitudes. Presenta el carácter del reino mediante las bienaventuranzas, la misión de los discípulos como sal y luz, y una ética que profundiza la intención del corazón.",
+      "learning_path": {
+        "focus_question": "¿Qué tipo de vida y carácter espera Jesús de quienes pertenecen al reino?",
+        "objectives": [
+          "Identificar el carácter del reino en las bienaventuranzas.",
+          "Comprender la misión de los discípulos como sal y luz.",
+          "Analizar la ética de Jesús como profundización de la justicia."
+        ],
+        "prior_knowledge": [
+          "Conocimiento general de la Ley de Moisés.",
+          "Nociones sobre ética y justicia."
+        ],
+        "summary_statement": "Jesús presenta una justicia interior que transforma actitudes, relaciones y conducta."
+      },
+      "structural_outline": [
+        {
+          "reference_range": "Mateo 5:1-2",
+          "title": "Introducción al sermón",
+          "summary": "Jesús sube al monte, se sienta y enseña a sus discípulos."
+        },
+        {
+          "reference_range": "Mateo 5:3-12",
+          "title": "Bienaventuranzas",
+          "summary": "Jesús describe las bendiciones del reino y el carácter de quienes lo reciben."
+        },
+        {
+          "reference_range": "Mateo 5:13-16",
+          "title": "Sal de la tierra y luz del mundo",
+          "summary": "Los discípulos son llamados a ejercer influencia y mostrar buenas obras."
+        },
+        {
+          "reference_range": "Mateo 5:17-20",
+          "title": "Jesús y la Ley",
+          "summary": "Jesús afirma el cumplimiento de la Ley y llama a una justicia mayor."
+        },
+        {
+          "reference_range": "Mateo 5:21-26",
+          "title": "Ira y reconciliación",
+          "summary": "Jesús profundiza el mandamiento contra el homicidio al abordar la ira y la reconciliación."
+        },
+        {
+          "reference_range": "Mateo 5:27-32",
+          "title": "Pureza y matrimonio",
+          "summary": "Jesús enseña sobre la intención del corazón y la seriedad del compromiso matrimonial."
+        },
+        {
+          "reference_range": "Mateo 5:33-37",
+          "title": "Juramentos y verdad",
+          "summary": "Jesús llama a hablar con integridad sin necesidad de juramentos."
+        },
+        {
+          "reference_range": "Mateo 5:38-42",
+          "title": "Retaliación y generosidad",
+          "summary": "Jesús propone una respuesta distinta ante la ofensa y la necesidad ajena."
+        },
+        {
+          "reference_range": "Mateo 5:43-48",
+          "title": "Amor a los enemigos",
+          "summary": "Jesús llama a amar y orar por los enemigos como reflejo del carácter del Padre."
+        }
+      ],
+      "themes": [
+        {
+          "id": "MAT-5-T1",
+          "name": "Carácter del reino",
+          "description": "Las bienaventuranzas muestran valores contrarios a la lógica del poder."
+        },
+        {
+          "id": "MAT-5-T2",
+          "name": "Influencia del discípulo",
+          "description": "Sal y luz expresan impacto moral, testimonio y servicio."
+        },
+        {
+          "id": "MAT-5-T3",
+          "name": "Justicia interior",
+          "description": "Jesús profundiza la Ley al abordar pensamientos, motivaciones y relaciones."
+        },
+        {
+          "id": "MAT-5-T4",
+          "name": "Amor radical",
+          "description": "El amor a los enemigos refleja la misericordia del Padre."
+        }
+      ],
+      "key_verses": [
+        {
+          "reference": "Mateo 5:3",
+          "topic": "Pobreza de espíritu",
+          "pedagogical_note": "Introduce la primera bienaventuranza y el tono del sermón."
+        },
+        {
+          "reference": "Mateo 5:14",
+          "topic": "Luz del mundo",
+          "pedagogical_note": "Ideal para trabajar identidad y misión."
+        },
+        {
+          "reference": "Mateo 5:17",
+          "topic": "Cumplimiento de la Ley",
+          "pedagogical_note": "Clave para comprender la relación entre Jesús y las Escrituras."
+        },
+        {
+          "reference": "Mateo 5:44",
+          "topic": "Amor a los enemigos",
+          "pedagogical_note": "Punto culminante de la ética del reino."
+        }
+      ],
+      "characters": [
+        {
+          "name": "Jesús",
+          "role": "Maestro del reino",
+          "description": "Enseña con autoridad la ética del reino."
+        },
+        {
+          "name": "Discípulos",
+          "role": "Oyentes principales",
+          "description": "Reciben la enseñanza como comunidad de seguimiento."
+        },
+        {
+          "name": "Multitudes",
+          "role": "Audiencia ampliada",
+          "description": "Escuchan la enseñanza de Jesús en el monte."
+        }
+      ],
+      "places": [
+        {
+          "name": "Monte",
+          "description": "Lugar de enseñanza que evoca autoridad y revelación."
+        },
+        {
+          "name": "Galilea",
+          "description": "Contexto regional del ministerio de Jesús."
+        }
+      ],
+      "theological_emphasis": [
+        "El reino de Dios produce un nuevo carácter.",
+        "La justicia del reino transforma el corazón y las relaciones.",
+        "El amor imita la misericordia del Padre celestial."
+      ],
+      "instructional_activities": [
+        {
+          "type": "lista de valores",
+          "prompt": "Enumera las actitudes que Jesús bendice en las bienaventuranzas."
+        },
+        {
+          "type": "análisis ético",
+          "prompt": "Compara la justicia superficial con la justicia interior que enseña Jesús."
+        },
+        {
+          "type": "proyecto práctico",
+          "prompt": "Diseña una acción concreta para ser sal y luz en tu entorno."
+        },
+        {
+          "type": "oración guiada",
+          "prompt": "Escribe una breve oración para amar a alguien difícil."
+        }
+      ],
+      "assessment": {
+        "quiz": [
+          {
+            "type": "single_choice",
+            "question": "¿Qué enseña Jesús en las bienaventuranzas?",
+            "options": [
+              "El carácter bendecido en el reino",
+              "La ley ceremonial",
+              "La historia de Israel"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Las bienaventuranzas describen el carácter de quienes viven bajo el reino."
+          },
+          {
+            "type": "single_choice",
+            "question": "¿Qué significa ser sal de la tierra y luz del mundo?",
+            "options": [
+              "Ejercer influencia y mostrar buenas obras",
+              "Aislarse del mundo",
+              "Cumplir rituales externos"
+            ],
+            "correct_answer_index": 0,
+            "feedback": "Sal y luz expresan testimonio activo y servicio visible."
+          }
+        ],
+        "reflection_prompt": "¿Qué área de tu vida necesita mayor coherencia con la ética del reino?",
+        "application_prompt": "Elige una enseñanza de Mateo 5 y describe cómo aplicarla esta semana."
+      },
+      "ux_tags": [
+        "Sermón del monte",
+        "bienaventuranzas",
+        "sal y luz",
+        "ética del reino",
+        "amor a enemigos"
+      ]
+    }
+  ]
+}

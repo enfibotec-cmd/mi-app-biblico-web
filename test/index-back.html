@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selector Bíblico</title>
+  <link rel="stylesheet" href="src/styles.css" />
+  <script src="src/js/app.js" defer></script>
+</head>
+<body>
 
+  <header class="site-header">
+    <h1>📖 Selector Bíblico</h1>
+    <button type="button" class="theme-btn" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+  </header>
+
+  <main class="main-container">
+    <section class="card">
+      <h2>Seleccionar Pasaje</h2>
+      
+      <div id="statusBanner" class="status-banner hidden" aria-live="polite"></div>
+
+      <!-- Bloque de botones para filtrado rápido de testamentos -->
+      <div class="scope-filter-container">
+        <label class="scope-label">Ámbito de búsqueda</label>
+        <div class="scope-btn-group" id="scopeFilter" role="group" aria-label="Filtrar por testamento">
+          <button type="button" class="scope-btn active" data-scope="ALL" aria-pressed="true">
+            Todos <span class="badge" id="badgeAll">66</span>
+          </button>
+          <button type="button" class="scope-btn" data-scope="OT" aria-pressed="false">
+            OT <span class="badge" id="badgeOT">39</span>
+          </button>
+          <button type="button" class="scope-btn" data-scope="NT" aria-pressed="false">
+            NT <span class="badge" id="badgeNT">27</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="select-grid">
+        <div class="select-group">
+          <label for="bookSelect">Libro</label>
+          <select id="bookSelect" disabled></select>
+        </div>
+        
+        <div class="select-group">
+          <label for="chapterSelect">Capítulo</label>
+          <select id="chapterSelect" disabled></select>
+        </div>
+        
+        <div class="select-group">
+          <label for="verseSelect">Versículo</label>
+          <select id="verseSelect" disabled></select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Salida abajo del pasaje seleccionado -->
+    <section id="passageDisplay" class="passage-display hidden"></section>
+  </main>
+
+</body>
+</html>

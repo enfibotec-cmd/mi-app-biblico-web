@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VARIABLES Y TEMAS (Light / Dark)
+   1. VARIABLES Y TEMAS (Tokens Globales)
    ========================================================================== */
 :root {
   --bg-main: #f3f4f6;
@@ -7,11 +7,16 @@
   --text-main: #1f2937;
   --text-muted: #4b5563;
   --border-color: #d1d5db;
-  --hover-bg: #f3f4f6; /* Added */
+  --hover-bg: #e5e7eb;
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
-  --focus-ring: rgba(37, 99, 235, 0.2);
+  --focus-ring: rgba(37, 99, 235, 0.3);
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Tokens de Estado (Error / Feedback) */
+  --error-bg: rgba(220, 38, 38, 0.1);
+  --error-border: rgba(220, 38, 38, 0.3);
+  --error-text: #dc2626;
 }
 
 [data-theme="dark"] {
@@ -20,49 +25,22 @@
   --text-main: #f9fafb;
   --text-muted: #9ca3af;
   --border-color: #374151;
-  --hover-bg: #374151; /* Added */
+  --hover-bg: #374151;
   --primary-color: #3b82f6;
   --primary-hover: #60a5fa;
-  --focus-ring: rgba(59, 130, 246, 0.3);
+  --focus-ring: rgba(59, 130, 246, 0.4);
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+
+  /* Adaptación de Error para Dark Mode */
+  --error-bg: rgba(239, 68, 68, 0.15);
+  --error-border: rgba(239, 68, 68, 0.4);
+  --error-text: #f87171;
 }
 
 /* ==========================================================================
-   2. AJUSTE EN BLOQUE DE BOTONES (Removiendo referencias fantasma)
+   2. RESET Y BASE
    ========================================================================== */
-.scope-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-muted); /* Corregido: sustituye a --text-color */
-}
-
-.scope-btn {
-  flex: 1;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-card);
-  color: var(--text-main); /* Corregido: sustituye a --text-color */
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.875rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.375rem;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.scope-btn:hover {
-  background-color: var(--hover-bg); /* Ahora respeta el tema oscuro */
-}
-
-/* ==========================================================================
-   RESET Y ESTRUCTURA BASE
-   ========================================================================== */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -84,7 +62,17 @@ body {
 }
 
 /* ==========================================================================
-   HEADER
+   3. ACCESIBILIDAD GENERAL (Focus States)
+   ========================================================================== */
+button:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* ==========================================================================
+   4. HEADER Y NAVEGACIÓN
    ========================================================================== */
 .site-header {
   max-width: 800px;
@@ -108,14 +96,16 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .theme-btn:hover {
-  background-color: var(--border-color);
+  background-color: var(--hover-bg);
 }
 
-/* Filtro de Ámbito (Todos / OT / NT) */
+/* ==========================================================================
+   5. FILTRO DE ÁMBITO (Unificado y sin duplicados)
+   ========================================================================== */
 .scope-filter-container {
   margin-bottom: 1.25rem;
 }
@@ -125,7 +115,7 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--text-color, #333);
+  color: var(--text-muted);
 }
 
 .scope-btn-group {
@@ -137,9 +127,9 @@ body {
 .scope-btn {
   flex: 1;
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border-color, #ccc);
-  background-color: var(--bg-card, #fff);
-  color: var(--text-color, #333);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-main);
   border-radius: 6px;
   font-weight: 500;
   font-size: 0.875rem;
@@ -152,13 +142,13 @@ body {
 }
 
 .scope-btn:hover {
-  background-color: var(--hover-bg, #f4f4f4);
+  background-color: var(--hover-bg);
 }
 
 .scope-btn.active {
-  background-color: var(--primary-color, #0066cc);
+  background-color: var(--primary-color);
   color: #ffffff;
-  border-color: var(--primary-color, #0066cc);
+  border-color: var(--primary-color);
 }
 
 .scope-btn .badge {
@@ -173,7 +163,7 @@ body {
 }
 
 /* ==========================================================================
-   TARJETA Y FORMULARIO
+   6. TARJETAS Y FORMULARIOS
    ========================================================================== */
 .card {
   background-color: var(--bg-card);
@@ -208,7 +198,6 @@ body {
   color: var(--text-muted);
 }
 
-/* FIX: Contraste total para elementos select y sus opciones en Dark Mode */
 select {
   width: 100%;
   padding: 0.625rem 0.875rem;
@@ -222,24 +211,24 @@ select {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
 select:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Forzar color de fondo y texto dentro de las opciones desplegables */
-select option {
+select option,
+select optgroup {
   background-color: var(--bg-card);
   color: var(--text-main);
 }
 
+select optgroup {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
 /* ==========================================================================
-   ESTADOS DE ERROR Y MUESTRA EN PANTALLA (Salida Abajo)
+   7. BANNERS Y COMPONENTES DE SALIDA
    ========================================================================== */
 .status-banner {
   padding: 0.875rem 1rem;
@@ -253,13 +242,13 @@ select option {
 }
 
 .status-banner.error {
-  background-color: rgba(220, 38, 38, 0.15);
-  border: 1px solid rgba(220, 38, 38, 0.4);
-  color: #ef4444;
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
 }
 
 .retry-btn {
-  background-color: #dc2626;
+  background-color: var(--error-text);
   color: #ffffff;
   border: none;
   padding: 0.4rem 0.8rem;
@@ -282,30 +271,23 @@ select option {
   margin-bottom: 0.75rem;
 }
 
-.hidden {
-  display: none !important;
-}
-
-/* Badges informativos (OT / NT y Categoría) */
+/* Badges neutros */
 .badge {
   display: inline-block;
   padding: 0.25rem 0.6rem;
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: 4px;
-  background-color: var(--primary-color, #2563eb);
+  background-color: var(--primary-color);
   color: #ffffff;
   margin-right: 0.4rem;
 }
 
 .badge.muted {
-  background-color: var(--border-color, #e2e8f0);
-  color: var(--text-main, #0f172a);
+  background-color: var(--hover-bg);
+  color: var(--text-main);
 }
 
-/* Formato visual para grupos dentro de select */
-select optgroup {
-  background-color: var(--bg-card, #ffffff);
-  color: var(--primary-color, #2563eb);
-  font-weight: 700;
+.hidden {
+  display: none !important;
 }

@@ -1,192 +1,270 @@
+'use strict'; // Forzamos modo estricto para capturar errores silenciosos
 
 document.addEventListener('DOMContentLoaded', () => {
-  const bookSelect = document.getElementById('bookSelect');
-  const chapterSelect = document.getElementById('chapterSelect');
-  const verseSelect = document.getElementById('verseSelect');
-  const statusBanner = document.getElementById('statusBanner');
-  const themeToggle = document.getElementById('themeToggle');
-  const passageDisplay = document.getElementById('passageDisplay');
+  // ==========================================
+  // 1. VALIDACIÓN DE DEPENDENCIAS DOM
+  // ==========================================
+  const elements = {
+    bookSelect: document.getElementById('bookSelect'),
+    chapterSelect: document.getElementById('chapterSelect'),
+    verseSelect: document.getElementById('verseSelect'),
+    statusBanner: document.getElementById('statusBanner'),
+    themeToggle: document.getElementById('themeToggle'),
+    passageDisplay: document.getElementById('passageDisplay'),
+    scopeFilter: document.getElementById('scopeFilter'),
+    badgeAll: document.getElementById('badgeAll'),
+    badgeOT: document.getElementById('badgeOT'),
+    badgeNT: document.getElementById('badgeNT')
+  };
+
+  // Detenemos la ejecución si faltan nodos estructurales clave
+  if (!elements.bookSelect || !elements.chapterSelect || !elements.verseSelect) {
+    console.error('[Biblia App] Faltan elementos críticos del DOM. Verifica la plantilla HTML.');
+    return;
+  }
 
   let booksList = [];
+  let booksMap = new Map(); // Indexación O(1) para búsqueda rápida de libros por ID/código
+  let currentScope = 'ALL'; // Estado global del filtro de ámbito ('ALL' | 'OT' | 'NT')
+  const DEFAULT_VERSE_FALLBACK = 50;
 
   // ==========================================
-  // 1. GESTIÓN DE MODO OSCURO (Dark Mode)
+  // 2. GESTIÓN DE MODO OSCURO (Con soporte A11y)
   // ==========================================
   const savedTheme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
 
-  themeToggle?.addEventListener('click', () => {
+  elements.themeToggle?.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
+
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
   });
 
   function updateThemeIcon(theme) {
-    if (themeToggle) {
-      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-    }
+    if (!elements.themeToggle) return;
+    const isDark = theme === 'dark';
+
+    elements.themeToggle.textContent = isDark ? '☀️' : '🌙';
+    elements.themeToggle.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    elements.themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
   }
 
   // ==========================================
-  // 2. CARGA DE DATOS BÍBLICOS CON CONTROL DE CACHÉ
+  // 3. CARGA DE DATOS BÍBLICOS CON CACHÉ
   // ==========================================
   async function loadManifest() {
     setLoadingState();
 
     try {
-      // Prevención de caché mediante query param del timestamp
-      const response = await fetch(`./data/manifest.json?v=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(`./data/manifest.json?v=${Date.now()}`, { 
+        cache: 'no-store' 
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const data = await response.json();
 
-      // Compatibilidad si "books" es Objeto o Array
+      let rawBooks = [];
       if (Array.isArray(data.books)) {
-        booksList = data.books;
+        rawBooks = data.books;
       } else if (typeof data.books === 'object' && data.books !== null) {
-        booksList = Object.entries(data.books).map(([key, value]) => ({
+        rawBooks = Object.entries(data.books).map(([key, value]) => ({
           id: key,
           ...value
         }));
       }
 
-      if (!booksList.length) throw new Error('El manifest no contiene libros.');
+      if (!rawBooks.length) throw new Error('El manifest no contiene libros válidos.');
 
+      // Búsqueda instantánea O(1)
+      booksMap = new Map(rawBooks.map(b => [b.id || b.code, b]));
+      booksList = Array.from(booksMap.values());
+
+      updateBadgeCounts();
       clearStatus();
       populateBooks();
 
     } catch (error) {
-      console.error(error);
+      console.error('[Biblia App] Error al cargar manifest:', error);
       showError('Error al cargar la lista de libros. Revisa la ruta de manifest.json.', loadManifest);
     }
   }
 
+  // Actualiza los contadores de las etiquetas en los botones de ámbito
+  function updateBadgeCounts() {
+    const otCount = booksList.filter(b => b.testament === 'OT').length;
+    const ntCount = booksList.filter(b => b.testament === 'NT').length;
+
+    if (elements.badgeAll) elements.badgeAll.textContent = booksList.length;
+    if (elements.badgeOT) elements.badgeOT.textContent = otCount;
+    if (elements.badgeNT) elements.badgeNT.textContent = ntCount;
+  }
+
   // ==========================================
-  // 3. POBLADO Y ACTUALIZACIÓN DE SELECTORES
+  // 4. CONTROLADOR DEL FILTRO DE ÁMBITO (BOTONES)
+  // ==========================================
+  function initScopeFilter() {
+    if (!elements.scopeFilter) return;
+
+    // Delegación de eventos eficiente en el contenedor padre
+    elements.scopeFilter.addEventListener('click', (e) => {
+      const btn = e.target.closest('.scope-btn');
+      if (!btn || !btn.dataset.scope) return;
+
+      const selectedScope = btn.dataset.scope;
+      if (selectedScope === currentScope) return;
+
+      currentScope = selectedScope;
+
+      // Actualización de estado visual e interactivo
+      const scopeBtns = elements.scopeFilter.querySelectorAll('.scope-btn');
+      scopeBtns.forEach(b => {
+        const isActive = b.dataset.scope === currentScope;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      populateBooks();
+    });
+  }
+
+  // ==========================================
+  // 5. POBLADO Y ACTUALIZACIÓN DE SELECTORES
   // ==========================================
   function populateBooks() {
-    bookSelect.replaceChildren();
+    elements.bookSelect.replaceChildren(new Option('-- Seleccionar Libro --', ''));
 
-    const defaultOpt = new Option('-- Seleccionar Libro --', '');
-    bookSelect.appendChild(defaultOpt);
-
-    // Grupos visuales para Antiguo y Nuevo Testamento
-    const groupOT = document.createElement('optgroup');
-    groupOT.label = '— Antiguo Testamento —';
-
-    const groupNT = document.createElement('optgroup');
-    groupNT.label = '— Nuevo Testamento —';
-
-    booksList.forEach(b => {
-      const option = new Option(b.name, b.id || b.code);
-      
-      if (b.testament === 'OT') {
-        groupOT.appendChild(option);
-      } else if (b.testament === 'NT') {
-        groupNT.appendChild(option);
-      } else {
-        bookSelect.appendChild(option);
-      }
+    // Filtrar la lista de libros según el ámbito activo
+    const filteredBooks = booksList.filter(b => {
+      if (currentScope === 'ALL') return true;
+      return b.testament === currentScope;
     });
 
-    if (groupOT.children.length > 0) bookSelect.appendChild(groupOT);
-    if (groupNT.children.length > 0) bookSelect.appendChild(groupNT);
+    if (currentScope === 'ALL') {
+      const groupOT = document.createElement('optgroup');
+      groupOT.label = '— Antiguo Testamento —';
+      const groupNT = document.createElement('optgroup');
+      groupNT.label = '— Nuevo Testamento —';
 
-    bookSelect.disabled = false;
+      filteredBooks.forEach(b => {
+        const option = new Option(b.name, b.id || b.code);
+        if (b.testament === 'OT') groupOT.appendChild(option);
+        else if (b.testament === 'NT') groupNT.appendChild(option);
+        else elements.bookSelect.appendChild(option);
+      });
+
+      if (groupOT.children.length > 0) elements.bookSelect.appendChild(groupOT);
+      if (groupNT.children.length > 0) elements.bookSelect.appendChild(groupNT);
+    } else {
+      filteredBooks.forEach(b => {
+        elements.bookSelect.appendChild(new Option(b.name, b.id || b.code));
+      });
+    }
+
+    elements.bookSelect.disabled = filteredBooks.length === 0;
+
+    // Reinicio de selectores dependientes y visor
+    resetSelect(elements.chapterSelect, 'Selecciona un libro');
+    resetSelect(elements.verseSelect, 'Selecciona un capítulo');
+    clearPassageDisplay();
   }
 
   function updateChapters() {
-    const selectedBookId = bookSelect.value;
-    renderPassage();
+    const selectedBookId = elements.bookSelect.value;
 
     if (!selectedBookId) {
-      resetSelect(chapterSelect, 'Selecciona un libro');
-      resetSelect(verseSelect, 'Selecciona un capítulo');
+      resetSelect(elements.chapterSelect, 'Selecciona un libro');
+      resetSelect(elements.verseSelect, 'Selecciona un capítulo');
+      clearPassageDisplay();
       return;
     }
 
-    const book = booksList.find(b => (b.id || b.code) === selectedBookId);
+    const book = booksMap.get(selectedBookId);
     const totalChapters = book?.chapters || book?.chapterCount || 0;
 
     if (totalChapters === 0) {
-      resetSelect(chapterSelect, 'Sin capítulos');
-      resetSelect(verseSelect, 'Sin versículos');
+      resetSelect(elements.chapterSelect, 'Sin capítulos');
+      resetSelect(elements.verseSelect, 'Sin versículos');
       return;
     }
 
     const defaultOpt = new Option('-- Capítulo --', '');
     const options = Array.from({ length: totalChapters }, (_, i) => new Option(`Capítulo ${i + 1}`, i + 1));
 
-    chapterSelect.replaceChildren(defaultOpt, ...options);
-    chapterSelect.disabled = false;
+    elements.chapterSelect.replaceChildren(defaultOpt, ...options);
+    elements.chapterSelect.disabled = false;
+    resetSelect(elements.verseSelect, 'Selecciona un capítulo');
 
-    resetSelect(verseSelect, 'Selecciona un capítulo');
+    renderPassage();
   }
 
   function updateVerses() {
-    const selectedBookId = bookSelect.value;
-    const chapterVal = chapterSelect.value;
-    renderPassage();
+    const selectedBookId = elements.bookSelect.value;
+    const chapterVal = elements.chapterSelect.value;
 
     if (!selectedBookId || !chapterVal) {
-      resetSelect(verseSelect, 'Selecciona un capítulo');
+      resetSelect(elements.verseSelect, 'Selecciona un capítulo');
+      clearPassageDisplay();
       return;
     }
 
     const chapterNum = parseInt(chapterVal, 10);
     const chapterIdx = chapterNum - 1;
-
-    const book = booksList.find(b => (b.id || b.code) === selectedBookId);
+    const book = booksMap.get(selectedBookId);
 
     if (!book) {
-      resetSelect(verseSelect, 'Error de libro');
+      resetSelect(elements.verseSelect, 'Error de libro');
       return;
     }
 
     let totalVerses = 0;
-
-    // 1. Obtener conteo exacto de verseCounts
     if (Array.isArray(book.verseCounts) && book.verseCounts[chapterIdx] !== undefined) {
       totalVerses = book.verseCounts[chapterIdx];
-    } 
-    // 2. Fallback de respaldo si verseCounts no viene informado
-    else {
-      console.warn(`[Biblia] 'verseCounts' no encontrado para ${book.name} (Cap. ${chapterNum}). Respaldo: 50 versículos.`);
-      totalVerses = 50;
+    } else {
+      console.warn(`[Biblia] 'verseCounts' no encontrado para ${book.name} (Cap. ${chapterNum}). Respaldo: ${DEFAULT_VERSE_FALLBACK} versículos.`);
+      totalVerses = DEFAULT_VERSE_FALLBACK;
     }
 
     if (totalVerses <= 0) {
-      resetSelect(verseSelect, 'Sin versículos');
+      resetSelect(elements.verseSelect, 'Sin versículos');
       return;
     }
 
     const defaultOpt = new Option('-- Versículo --', '');
     const options = Array.from({ length: totalVerses }, (_, i) => new Option(`Versículo ${i + 1}`, i + 1));
 
-    verseSelect.replaceChildren(defaultOpt, ...options);
-    verseSelect.disabled = false;
+    elements.verseSelect.replaceChildren(defaultOpt, ...options);
+    elements.verseSelect.disabled = false;
+
+    renderPassage();
   }
 
   // ==========================================
-  // 4. MUESTRA EN PANTALLA (Salida Inferior)
+  // 6. RENDERIZADO SEGURO EN PANTALLA
   // ==========================================
-  function renderPassage() {
-    if (!passageDisplay) return;
+  function clearPassageDisplay() {
+    if (elements.passageDisplay) {
+      elements.passageDisplay.classList.add('hidden');
+      elements.passageDisplay.replaceChildren();
+    }
+  }
 
-    const bookId = bookSelect.value;
-    const chapter = chapterSelect.value;
-    const verse = verseSelect.value;
+  function renderPassage() {
+    if (!elements.passageDisplay) return;
+
+    const bookId = elements.bookSelect.value;
+    const chapter = elements.chapterSelect.value;
+    const verse = elements.verseSelect.value;
 
     if (!bookId) {
-      passageDisplay.classList.add('hidden');
+      clearPassageDisplay();
       return;
     }
 
-    const book = booksList.find(b => (b.id || b.code) === bookId);
+    const book = booksMap.get(bookId);
     if (!book) return;
 
     const testamentName = book.testament === 'OT' 
@@ -197,19 +275,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chapter) titleText += ` ${chapter}`;
     if (verse) titleText += `:${verse}`;
 
-    passageDisplay.classList.remove('hidden');
-    passageDisplay.innerHTML = `
-      <div style="margin-bottom: 0.5rem;">
-        ${testamentName ? `<span class="badge">${testamentName}</span>` : ''}
-        ${book.category ? `<span class="badge muted">${book.category}</span>` : ''}
-      </div>
-      <h3>${titleText}</h3>
-      <p style="color: var(--text-muted)">Pasaje seleccionado correctamente.</p>
-    `;
+    // Construcción del DOM 100% libre de innerHTML
+    elements.passageDisplay.classList.remove('hidden');
+    elements.passageDisplay.replaceChildren();
+
+    const badgeContainer = document.createElement('div');
+    badgeContainer.style.marginBottom = '0.5rem';
+
+    if (testamentName) {
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = testamentName;
+      badgeContainer.appendChild(badge);
+    }
+
+    if (book.category) {
+      const badge = document.createElement('span');
+      badge.className = 'badge muted';
+      badge.textContent = book.category;
+      badgeContainer.appendChild(badge);
+    }
+
+    const titleEl = document.createElement('h3');
+    titleEl.textContent = titleText;
+
+    const infoEl = document.createElement('p');
+    infoEl.style.color = 'var(--text-muted)';
+    infoEl.textContent = 'Pasaje seleccionado correctamente.';
+
+    elements.passageDisplay.append(badgeContainer, titleEl, infoEl);
   }
 
   // ==========================================
-  // 5. FUNCIONES AUXILIARES Y EVENTOS
+  // 7. MANEJO DE ESTADOS Y BANNERS DE ERROR
   // ==========================================
   function resetSelect(selectEl, placeholder) {
     if (!selectEl) return;
@@ -218,31 +316,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setLoadingState() {
-    resetSelect(bookSelect, 'Cargando libros...');
-    resetSelect(chapterSelect, 'Selecciona un libro');
-    resetSelect(verseSelect, 'Selecciona un capítulo');
+    resetSelect(elements.bookSelect, 'Cargando libros...');
+    resetSelect(elements.chapterSelect, 'Selecciona un libro');
+    resetSelect(elements.verseSelect, 'Selecciona un capítulo');
   }
 
   function showError(message, retryFn) {
-    statusBanner.className = 'status-banner error';
-    statusBanner.innerHTML = `
-      <span>⚠️ ${message}</span>
-      <button type="button" class="retry-btn" id="retryBtn">Reintentar</button>
-    `;
-    statusBanner.classList.remove('hidden');
-    document.getElementById('retryBtn')?.addEventListener('click', retryFn);
+    if (!elements.statusBanner) return;
+
+    elements.statusBanner.className = 'status-banner error';
+    elements.statusBanner.replaceChildren();
+
+    const errorSpan = document.createElement('span');
+    errorSpan.textContent = `⚠️ ${message}`;
+
+    const retryBtn = document.createElement('button');
+    retryBtn.type = 'button';
+    retryBtn.className = 'retry-btn';
+    retryBtn.textContent = 'Reintentar';
+    retryBtn.addEventListener('click', retryFn, { once: true });
+
+    elements.statusBanner.append(errorSpan, retryBtn);
+    elements.statusBanner.classList.remove('hidden');
   }
 
   function clearStatus() {
-    statusBanner.classList.add('hidden');
-    statusBanner.innerHTML = '';
+    if (elements.statusBanner) {
+      elements.statusBanner.classList.add('hidden');
+      elements.statusBanner.replaceChildren();
+    }
   }
 
-  // Escuchadores de eventos
-  bookSelect.addEventListener('change', updateChapters);
-  chapterSelect.addEventListener('change', updateVerses);
-  verseSelect.addEventListener('change', renderPassage);
+  // ==========================================
+  // 8. ESCUCHADORES DE EVENTOS E INICIALIZACIÓN
+  // ==========================================
+  elements.bookSelect.addEventListener('change', updateChapters);
+  elements.chapterSelect.addEventListener('change', updateVerses);
+  elements.verseSelect.addEventListener('change', renderPassage);
 
-  // Carga inicial
+  // Inicializar listeners y carga de datos
+  initScopeFilter();
   loadManifest();
 });

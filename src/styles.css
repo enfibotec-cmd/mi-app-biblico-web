@@ -7,6 +7,7 @@
   --text-main: #1f2937;
   --text-muted: #4b5563;
   --border-color: #d1d5db;
+  --hover-bg: #f3f4f6; /* Added */
   --primary-color: #2563eb;
   --primary-hover: #1d4ed8;
   --focus-ring: rgba(37, 99, 235, 0.2);
@@ -19,6 +20,7 @@
   --text-main: #f9fafb;
   --text-muted: #9ca3af;
   --border-color: #374151;
+  --hover-bg: #374151; /* Added */
   --primary-color: #3b82f6;
   --primary-hover: #60a5fa;
   --focus-ring: rgba(59, 130, 246, 0.3);

@@ -15,7 +15,7 @@
     "GEN": { "id": 1, "name": "Génesis", "testament": "OT", "chapters": 50 },
     "EXO": { "id": 2, "name": "Éxodo", "testament": "OT", "chapters": 40 },
     "LEV": { "id": 3, "name": "Levítico", "testament": "OT", "chapters": 27 },
-    "NUM": {ñ "id": 4, "name": "Números", "testament": "OT", "chapters": 36 },
+    "NUM": { "id": 4, "name": "Números", "testament": "OT", "chapters": 36 },
     "DEU": { "id": 5, "name": "Deuteronomio", "testament": "OT", "chapters": 34 },
     "JOS": { "id": 6, "name": "Josué", "testament": "OT", "chapters": 24 },
     "JDG": { "id": 7, "name": "Jueces", "testament": "OT", "chapters": 21 },

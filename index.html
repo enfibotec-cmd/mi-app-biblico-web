@@ -1,60 +1,89 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selector Bíblico - Estudio Interactivo</title>
-  <link rel="stylesheet" href="src/styles.css" />
-  <script src="src/js/app.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Selector Bíblico interactivo para estudio con resumen, análisis y ejercicios prácticos.">
+  <meta name="theme-color" content="#0d6efd">
+  <meta name="color-scheme" content="light dark">
+  
+  <!-- Seguridad -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  
+  <title>Selector Bíblico — Estudio Interactivo</title>
+  
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="./data/manifest.json" as="fetch" crossorigin>
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
 </head>
 <body>
-
   <header class="site-header">
     <div class="header-container">
-      <h1>📖 Selector Bíblico</h1>
-      <button type="button" class="theme-btn" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+      <h1 class="site-title">📖 Selector Bíblico</h1>
+      <button 
+        type="button" 
+        id="themeToggle" 
+        class="theme-btn" 
+        aria-label="Cambiar a modo oscuro"
+        aria-pressed="false">
+        🌙
+      </button>
     </div>
   </header>
 
   <main class="main-container">
-    <!-- Panel de Selección -->
-    <section class="card selection-card">
-      <h2>Seleccionar Pasaje</h2>
-      
-      <div id="statusBanner" class="status-banner hidden" aria-live="polite"></div>
+    <!-- Banner de estado -->
+    <div 
+      id="statusBanner" 
+      class="status-banner hidden" 
+      role="alert" 
+      aria-live="polite">
+    </div>
 
-      <!-- Filtro por Testamento -->
+    <section class="card" aria-labelledby="selector-heading">
+      <h2 id="selector-heading" class="visually-hidden">Selector de pasaje</h2>
+      
+      <!-- Filtro por ámbito -->
       <div class="scope-filter-container">
-        <label class="scope-label">Ámbito de búsqueda</label>
-        <div class="scope-btn-group" id="scopeFilter" role="group" aria-label="Filtrar por testamento">
+        <span id="scope-label" class="scope-label">Ámbito de búsqueda</span>
+        <div 
+          id="scopeFilter" 
+          class="scope-btn-group" 
+          role="group" 
+          aria-labelledby="scope-label">
           <button type="button" class="scope-btn active" data-scope="ALL" aria-pressed="true">
-            Todos <span class="badge" id="badgeAll">66</span>
+            Todos <span id="badgeAll" class="badge">66</span>
           </button>
           <button type="button" class="scope-btn" data-scope="OT" aria-pressed="false">
-            OT <span class="badge" id="badgeOT">39</span>
+            AT <span id="badgeOT" class="badge">39</span>
           </button>
           <button type="button" class="scope-btn" data-scope="NT" aria-pressed="false">
-            NT <span class="badge" id="badgeNT">27</span>
+            NT <span id="badgeNT" class="badge">27</span>
           </button>
         </div>
       </div>
 
-      <!-- Selectores Fila / Grid -->
+      <!-- Selectores -->
       <div class="select-grid">
         <div class="select-group">
           <label for="bookSelect">Libro</label>
-          <select id="bookSelect">
-            <option value="">Cargando libros...</option>
+          <select id="bookSelect" aria-required="true">
+            <option value="">-- Seleccionar Libro --</option>
           </select>
         </div>
-        
         <div class="select-group">
           <label for="chapterSelect">Capítulo</label>
-          <select id="chapterSelect" disabled>
+          <select id="chapterSelect" disabled aria-required="true">
             <option value="">Selecciona libro primero</option>
           </select>
         </div>
-        
         <div class="select-group">
           <label for="verseSelect">Versículo</label>
           <select id="verseSelect" disabled>
@@ -64,67 +93,21 @@
       </div>
     </section>
 
-    <!-- Módulo Dinámico de Salida -->
-    <section id="passageDisplay" class="passage-display card hidden">
-      <!-- Encabezado del pasaje -->
-      <header class="passage-header">
-        <div class="passage-title-group">
-          <span class="badge-accent" id="passageKeyIdea">Cargando...</span>
-          <h2 id="passageTitle">Juan 1</h2>
-        </div>
-        <span class="meta-info" id="passageReadingTime">⏱️ 0 min de lectura</span>
-      </header>
-
-      <!-- Pestañas de navegación interna -->
-      <nav class="passage-tabs" role="tablist" aria-label="Secciones del pasaje">
-        <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabSummary" id="btnSummary">
-          📝 Resumen
-        </button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabQuestions" id="btnQuestions">
-          🤔 Análisis (2)
-        </button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tabExercise" id="btnExercise">
-          🎯 Práctica
-        </button>
-      </nav>
-
-      <!-- Panel 1: Resumen Conceptual -->
-      <article id="tabSummary" class="tab-content" role="tabpanel" aria-labelledby="btnSummary">
-        <p class="summary-text" id="summaryText"></p>
-        <footer class="summary-footer">
-          <small id="summaryWordCount" class="text-muted"></small>
-        </footer>
-      </article>
-
-      <!-- Panel 2: Preguntas de Análisis Interactivas -->
-      <article id="tabQuestions" class="tab-content hidden" role="tabpanel" aria-labelledby="btnQuestions">
-        <div id="questionsContainer" class="questions-list"></div>
-      </article>
-
-      <!-- Panel 3: Ejercicio Práctico y Entregable -->
-      <article id="tabExercise" class="tab-content hidden" role="tabpanel" aria-labelledby="btnExercise">
-        <div class="exercise-card">
-          <div class="exercise-header">
-            <h3>Objetivo del Ejercicio</h3>
-            <span id="exerciseDuration" class="badge-time"></span>
-          </div>
-          <p id="exerciseObjective" class="exercise-objective"></p>
-          
-          <h4 class="section-subtitle">Pasos de Implementación</h4>
-          <ul id="exerciseSteps" class="checklist-group"></ul>
-
-          <div class="deliverable-box">
-            <label for="deliverableInput" class="deliverable-label">
-              📋 <strong>Entregable Generado</strong>
-            </label>
-            <p id="deliverableDescription" class="deliverable-desc"></p>
-            <textarea id="deliverableInput" class="form-control" placeholder="Escribe aquí tu plan de acción o entregable final..."></textarea>
-            <span class="save-status" id="statusDeliverable">Guardado automático</span>
-          </div>
-        </div>
-      </article>
+    <!-- Módulo de pasaje -->
+    <section 
+      id="passageDisplay" 
+      class="card hidden" 
+      aria-labelledby="passage-title"
+      aria-busy="false">
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="footer-container">
+      <small>Guardado automático · Datos almacenados localmente</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
 </body>
 </html>

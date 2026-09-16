@@ -243,24 +243,98 @@ async function updateChapters() {
 }
 
 async function updateVerses() {
-  const seq = ++verseSequence, bid = elements.bookSelect.value, cv = elements.chapterSelect.value;
-  if (!bid || !cv) { resetSelect(elements.verseSelect, 'Selecciona un capítulo'); clearPassageDisplay(); return; }
-  const cn = Number.parseInt(cv, 10);
-  if (!Number.isInteger(cn) || cn <= 0) { resetSelect(elements.verseSelect, 'Capítulo inválido'); return; }
-  const book = booksMap.get(bid);
-  if (!book) { resetSelect(elements.verseSelect, 'Error de libro'); return; }
-  let tv = 0;
-  if (Array.isArray(book.verseCounts) && Number.isInteger(Number(book.verseCounts[cn-1]))) tv = Number(book.verseCounts[cn-1]);
+  const currentSeq = ++verseSequence;
+  const selectedBookId = elements.bookSelect.value;
+  const chapterValue = elements.chapterSelect.value;
+
+  if (!selectedBookId || !chapterValue) {
+    resetSelect(elements.verseSelect, 'Selecciona un capítulo');
+    clearPassageDisplay();
+    return;
+  }
+
+  const chapterNum = Number.parseInt(chapterValue, 10);
+  if (!Number.isInteger(chapterNum) || chapterNum <= 0) {
+    resetSelect(elements.verseSelect, 'Capítulo inválido');
+    return;
+  }
+
+  const book = booksMap.get(selectedBookId);
+  if (!book) {
+    resetSelect(elements.verseSelect, 'Error de libro');
+    return;
+  }
+
+  const chapterIndex = chapterNum - 1;
+  let totalVerses = 0;
+
+  // 1. Intentar obtener de verseCounts en el manifest
+  if (Array.isArray(book.verseCounts) && Number.isInteger(Number(book.verseCounts[chapterIndex]))) {
+    totalVerses = Number(book.verseCounts[chapterIndex]);
+    console.log(`[Biblia App] Versículos desde manifest: ${totalVerses}`);
+  } 
+  // 2. Si no, cargar el detalle del libro
   else {
-    const dd = await fetchBookDetailData(bid); if (seq !== verseSequence) return;
-    if (Array.isArray(dd)) {
-      const co = dd.find(c => Number(c.chapter) === cn) || dd[cn-1];
-      if (co) { if (Array.isArray(co.verses)) tv = co.verses.length; else if (Number.isInteger(Number(co.versesCount))) tv = Number(co.versesCount); }
+    const detailData = await fetchBookDetailData(selectedBookId);
+    if (currentSeq !== verseSequence) return;
+    
+    if (Array.isArray(detailData)) {
+      // Buscar el capítulo de múltiples formas
+      const chapterObj = detailData.find(ch => Number(ch.chapter) === chapterNum) 
+                       || detailData.find(ch => Number(ch.number) === chapterNum)
+                       || detailData.find(ch => Number(ch.id) === chapterNum)
+                       || detailData[chapterIndex];
+      
+      if (chapterObj) {
+        console.log('[Biblia App] Objeto de capítulo encontrado:', chapterObj);
+        
+        // Intentar diferentes estructuras de datos
+        if (Array.isArray(chapterObj.verses)) {
+          totalVerses = chapterObj.verses.length;
+        } else if (Array.isArray(chapterObj.verseList)) {
+          totalVerses = chapterObj.verseList.length;
+        } else if (typeof chapterObj.versesCount === 'number') {
+          totalVerses = chapterObj.versesCount;
+        } else if (typeof chapterObj.verseCount === 'number') {
+          totalVerses = chapterObj.verseCount;
+        } else if (typeof chapterObj.numVerses === 'number') {
+          totalVerses = chapterObj.numVerses;
+        } else if (typeof chapterObj.verses_count === 'number') {
+          totalVerses = chapterObj.verses_count;
+        } else {
+          // Última opción: contar propiedades numéricas
+          const verseKeys = Object.keys(chapterObj).filter(k => /^\d+$/.test(k));
+          if (verseKeys.length > 0) {
+            totalVerses = Math.max(...verseKeys.map(Number));
+          }
+        }
+        
+        console.log(`[Biblia App] Total de versículos detectados: ${totalVerses}`);
+      } else {
+        console.warn(`[Biblia App] No se encontró el capítulo ${chapterNum} en ${selectedBookId}`);
+      }
     }
   }
-  if (tv <= 0) { console.warn('[Biblia App] Sin versículos para ' + book.name + ' cap ' + cn); resetSelect(elements.verseSelect, 'Versículos no disponibles'); return; }
-  const d = new Option('-- Versículo --', ''), opts = Array.from({ length: tv }, (_, i) => new Option('Versículo ' + (i+1), String(i+1)));
-  elements.verseSelect.replaceChildren(d, ...opts); elements.verseSelect.disabled = false; renderPassage();
+
+  // Si aún no tenemos versículos, mostrar mensaje claro
+  if (totalVerses <= 0) {
+    console.warn(`[Biblia App] No se pudo determinar versículos de ${book.name} cap ${chapterNum}`);
+    console.warn('[Biblia App] Estructura del libro:', await fetchBookDetailData(selectedBookId));
+    resetSelect(elements.verseSelect, 'Versículos no disponibles');
+    return;
+  }
+
+  // Generar opciones de versículos
+  const defaultOption = new Option('-- Todo el capítulo --', '');
+  const options = Array.from({ length: totalVerses }, (_, index) => 
+    new Option(`Versículo ${index + 1}`, String(index + 1))
+  );
+  
+  elements.verseSelect.replaceChildren(defaultOption, ...options);
+  elements.verseSelect.disabled = false;
+  
+  console.log(`[Biblia App] ${totalVerses} versículos cargados para ${book.name} ${chapterNum}`);
+  renderPassage();
 }
 
 function clearAutoSaveTimers() { autoSaveTimers.forEach(t => clearTimeout(t)); autoSaveTimers.clear(); }

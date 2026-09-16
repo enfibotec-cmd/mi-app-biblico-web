@@ -2174,4 +2174,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
 
   initScopeFilter();
-  initPassageDisplayDelegation()
+  initPassageDisplayDelegation();
+  loadManifest();
+});

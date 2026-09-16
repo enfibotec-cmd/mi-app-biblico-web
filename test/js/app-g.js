@@ -2174,12 +2174,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
 
   initScopeFilter();
-  initPassageDisplayDelegation();
-  loadManifest();
-});
-
-Resumen de Cambios Aplicados
- * Aislamiento de Claves (Sección 16): Las llaves para almacenamiento en local ahora usan q_${bookId}_${chapterId}_..., garantizando que las notas de un libro no sobreescriban las de otro con el mismo número de capítulo.
- * Control de Carreras Asíncronas (Secciones 12 y 13): Se agregaron chapterSequence y verseSequence a la par de renderSequence para cancelar la inyección en los desplegables si el usuario cambia rápidamente de libro o capítulo antes de que la petición fetch responda.
- * Fusión de Estado Multipestaña (Sección 5): Se cambió la asignación directa por una fusión superficial { ...parsed, ...userNotes }, evitando pérdidas de caracteres mientras el debounce local guarda la nota activa.
- * IDs Únicos en el DOM (Sección 16): Los contenedores de paneles y referencias de accesibilidad (aria-controls) ahora usan identificadores únicos como panel_summary_${bookId}_${chapterId}.
+  initPassageDisplayDelegation()

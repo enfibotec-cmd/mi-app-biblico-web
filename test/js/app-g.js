@@ -1,3 +1,4 @@
+Aquí tienes el código JavaScript completo y corregido, incorporando la resolución de las 4 colisiones detectadas (claves de localStorage aisladas por libro, control de carreras asíncronas en selectores, fusión de estado entre pestañas e IDs dinámicos en el DOM).
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const MAX_NOTE_LENGTH = 5000;
 
-  // Límite aproximado de seguridad.
-  // Se mide posteriormente en bytes reales.
+  // Límite aproximado de seguridad (4 MB).
   const MAX_STORAGE_SIZE = 4 * 1024 * 1024;
 
   let currentScope = 'ALL';
@@ -53,8 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let userNotes = {};
 
-  // Control de renderizado para evitar condiciones de carrera.
+  // Control de renderizado y peticiones para evitar condiciones de carrera.
   let renderSequence = 0;
+  let chapterSequence = 0;
+  let verseSequence = 0;
 
   // ==========================================
   // 3. UTILIDADES
@@ -190,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
   userNotes = loadNotesFromStorage();
 
   // ==========================================
-  // 5. SINCRONIZACIÓN ENTRE PESTAÑAS
+  // 5. SINCRONIZACIÓN ENTRE PESTAÑAS (FUSIÓN DE ESTADO)
   // ==========================================
 
   window.addEventListener('storage', (event) => {
@@ -200,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (event.newValue === null) {
       userNotes = {};
+      renderPassage();
       return;
     }
 
@@ -210,14 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Formato de sincronización inválido.');
       }
 
-      userNotes = parsed;
+      // CORRECCIÓN COLISIÓN #3: Fusión para preservar cambios locales no guardados aún
+      userNotes = { ...parsed, ...userNotes };
 
       console.info(
-        '[Biblia App] Notas sincronizadas desde otra pestaña.'
+        '[Biblia App] Notas sincronizadas y fusionadas desde otra pestaña.'
       );
 
-      // Si el usuario está viendo preguntas/ejericios,
-      // actualizamos el contenido visual.
       renderPassage();
 
     } catch (error) {
@@ -658,10 +660,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 12. CAPÍTULOS
+  // 12. CAPÍTULOS (CON CONTROL ASÍNCRONO)
   // ==========================================
 
   async function updateChapters() {
+    // CORRECCIÓN COLISIÓN #2: Control de secuencia asíncrona
+    const currentSeq = ++chapterSequence;
+
     const selectedBookId =
       elements.bookSelect.value;
 
@@ -695,6 +700,10 @@ document.addEventListener('DOMContentLoaded', () => {
         await fetchBookDetailData(
           selectedBookId
         );
+
+      if (currentSeq !== chapterSequence) {
+        return; // Petición obsoleta ignorada
+      }
 
       if (Array.isArray(chaptersList)) {
         totalChapters =
@@ -749,10 +758,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 13. VERSÍCULOS
+  // 13. VERSÍCULOS (CON CONTROL ASÍNCRONO)
   // ==========================================
 
   async function updateVerses() {
+    // CORRECCIÓN COLISIÓN #2: Control de secuencia asíncrona
+    const currentSeq = ++verseSequence;
+
     const selectedBookId =
       elements.bookSelect.value;
 
@@ -823,6 +835,10 @@ document.addEventListener('DOMContentLoaded', () => {
           selectedBookId
         );
 
+      if (currentSeq !== verseSequence) {
+        return; // Petición obsoleta ignorada
+      }
+
       if (Array.isArray(detailData)) {
         const chapterObj =
           detailData.find(
@@ -857,9 +873,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // IMPORTANTE:
-    // No inventar 50 versículos si no conocemos
-    // realmente la cantidad.
     if (totalVerses <= 0) {
       console.warn(
         `[Biblia App] No se pudo determinar la cantidad de versículos de ${book.name}, capítulo ${chapterNum}.`
@@ -1034,7 +1047,6 @@ document.addEventListener('DOMContentLoaded', () => {
           bookId
         );
 
-      // Evita renderizar una respuesta vieja.
       if (
         currentRender !== renderSequence
       ) {
@@ -1161,7 +1173,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chapterDetail) {
       renderInteractiveStudyModule(
         fragment,
-        chapterDetail
+        chapterDetail,
+        bookId
       );
     } else {
       const infoEl =
@@ -1181,7 +1194,6 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    // Segunda comprobación antes del DOM.
     if (
       currentRender !== renderSequence
     ) {
@@ -1198,15 +1210,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 16. MÓDULO DE ESTUDIO
+  // 16. MÓDULO DE ESTUDIO (CON FIXES DE LLAVES E IDs)
   // ==========================================
 
   function renderInteractiveStudyModule(
     parentFragment,
-    chapterData
+    chapterData,
+    bookId
   ) {
     const chapterId =
       String(chapterData.chapter);
+
+    // CORRECCIÓN COLISIÓN #4: IDs de paneles dinámicos y únicos
+    const panelSummaryId = `panel_summary_${bookId}_${chapterId}`;
+    const panelQuestionsId = `panel_questions_${bookId}_${chapterId}`;
+    const panelExerciseId = `panel_exercise_${bookId}_${chapterId}`;
 
     // ------------------------------------------
     // Tabs
@@ -1229,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     const createTab = (
-      id,
+      targetPanelId,
       label,
       active = false
     ) => {
@@ -1252,14 +1270,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       button.setAttribute(
         'aria-controls',
-        id
+        targetPanelId
       );
 
       button.tabIndex =
         active ? 0 : -1;
 
       button.id =
-        `btn_${id}_${chapterId}`;
+        `btn_${targetPanelId}`;
 
       button.textContent =
         label;
@@ -1269,7 +1287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tabSummary =
       createTab(
-        'tabSummary',
+        panelSummaryId,
         '📝 Resumen',
         true
       );
@@ -1285,13 +1303,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tabQuestions =
       createTab(
-        'tabQuestions',
+        panelQuestionsId,
         `🤔 Análisis (${questionCount})`
       );
 
     const tabExercise =
       createTab(
-        'tabExercise',
+        panelExerciseId,
         '🎯 Práctica'
       );
 
@@ -1312,8 +1330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const panelSummary =
       document.createElement('article');
 
-    panelSummary.id =
-      'tabSummary';
+    panelSummary.id = panelSummaryId;
 
     panelSummary.className =
       'tab-content';
@@ -1390,8 +1407,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const panelQuestions =
       document.createElement('article');
 
-    panelQuestions.id =
-      'tabQuestions';
+    panelQuestions.id = panelQuestionsId;
 
     panelQuestions.className =
       'tab-content hidden';
@@ -1427,8 +1443,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const questionId =
         String(question.id);
 
+      // CORRECCIÓN COLISIÓN #1: Incluir bookId en la clave
       const noteKey =
-        `q_${chapterId}_${questionId}`;
+        `q_${bookId}_${chapterId}_${questionId}`;
 
       const savedText =
         typeof userNotes[noteKey] === 'string'
@@ -1542,8 +1559,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const panelExercise =
       document.createElement('article');
 
-    panelExercise.id =
-      'tabExercise';
+    panelExercise.id = panelExerciseId;
 
     panelExercise.className =
       'tab-content hidden';
@@ -1641,8 +1657,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     instructions.forEach(
       (stepText, index) => {
+        // CORRECCIÓN COLISIÓN #1: Incluir bookId en la clave
         const stepKey =
-          `step_${chapterId}_${index}`;
+          `step_${bookId}_${chapterId}_${index}`;
 
         const isChecked =
           userNotes[stepKey] === true;
@@ -1734,8 +1751,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ?.practicalExercise
         ?.deliverable || '';
 
+    // CORRECCIÓN COLISIÓN #1: Incluir bookId en la clave
     const deliverableKey =
-      `deliv_${chapterId}`;
+      `deliv_${bookId}_${chapterId}`;
 
     const deliverableArea =
       document.createElement('textarea');
@@ -2160,3 +2178,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initPassageDisplayDelegation();
   loadManifest();
 });
+
+Resumen de Cambios Aplicados
+ * Aislamiento de Claves (Sección 16): Las llaves para almacenamiento en local ahora usan q_${bookId}_${chapterId}_..., garantizando que las notas de un libro no sobreescriban las de otro con el mismo número de capítulo.
+ * Control de Carreras Asíncronas (Secciones 12 y 13): Se agregaron chapterSequence y verseSequence a la par de renderSequence para cancelar la inyección en los desplegables si el usuario cambia rápidamente de libro o capítulo antes de que la petición fetch responda.
+ * Fusión de Estado Multipestaña (Sección 5): Se cambió la asignación directa por una fusión superficial { ...parsed, ...userNotes }, evitando pérdidas de caracteres mientras el debounce local guarda la nota activa.
+ * IDs Únicos en el DOM (Sección 16): Los contenedores de paneles y referencias de accesibilidad (aria-controls) ahora usan identificadores únicos como panel_summary_${bookId}_${chapterId}.

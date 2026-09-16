@@ -4,6 +4,8 @@ Actúa como auditor senior de rendimiento web, especializado en análisis técni
 
 ## 1. Objetivo
 
+{{PROYECTO}} = "Selector Bíblico - Estudio Interactivo"
+
 Analiza el tiempo de carga y rendimiento del proyecto {{PROYECTO}}.
 
 Evalúa las métricas solicitadas:

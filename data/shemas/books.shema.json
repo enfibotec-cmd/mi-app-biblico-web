@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "biblia-book.schema.json",
+  "title": "Libro bíblico",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "testament",
+    "chapters"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 66
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "testament": {
+      "type": "string",
+      "enum": ["OT", "NT"]
+    },
+    "chapters": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 150
+    }
+  }
+}

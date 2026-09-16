@@ -275,10 +275,16 @@ body {
   font-size: 0.95rem;
   transition: var(--transition);
   appearance: none;
+  /* Flecha SVG codificada en base64 para modo claro */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235c636a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px;
+}
+
+/* CORRECCIÓN: Flecha del select visible en modo oscuro */
+[data-theme="dark"] .select-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org.org/2000/svg' width='16' height='16' fill='%239ca3af' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
 }
 
 .select-group select:disabled {
@@ -294,6 +300,13 @@ body {
 /* =========================================
    7. MÓDULO DE PASAJE Y TEXTO BÍBLICO
    ========================================= */
+.passage-title-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .passage-header {
   display: flex;
   flex-direction: column;
@@ -329,7 +342,7 @@ body {
   gap: 0.25rem;
 }
 
-/* NUEVO: Contenedor de texto bíblico optimizado para lectura */
+/* Contenedor de texto bíblico optimizado para lectura */
 .verses-text {
   background-color: var(--card-subtle);
   border: 1px solid var(--border-color);
@@ -400,6 +413,15 @@ body {
 .tab-btn.active {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .summary-text {

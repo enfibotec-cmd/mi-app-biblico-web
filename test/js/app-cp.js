@@ -58,6 +58,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mapa centralizado para gestionar timers y evitar fugas de memoria
   const autoSaveTimers = new Map();
 
+  // Configuración optimizada de LocalStorage
+const STORAGE_KEY = 'bibliaApp_notes';
+const MAX_STORAGE_SIZE = 4 * 1024 * 1024; // 4MB límite global
+
+function safeSaveNotes(notes) {
+  try {
+    const serialized = JSON.stringify(notes);
+    if (serialized.length > MAX_STORAGE_SIZE) {
+      showError('Almacenamiento lleno. Exporta tus notas.', null);
+      return;
+    }
+    localStorage.setItem(STORAGE_KEY, serialized);
+  } catch (e) {
+    console.error('[Biblia App] Error al guardar:', e);
+    showError('No se pudieron guardar tus notas.', null);
+  }
+}
+
+// Listener multi-pestaña para sincronización
+window.addEventListener('storage', (event) => {
+  if (event.key === STORAGE_KEY) {
+    try {
+      userNotes = JSON.parse(event.newValue) || {};
+      console.info('[Biblia App] Notas sincronizadas desde otra pestaña.');
+    } catch {
+      console.warn('[Biblia App] Datos corruptos en sincronización.');
+    }
+  }
+});
+
   // ==========================================
   // 3. UTILIDADES DE RENDIMIENTO
   // ==========================================

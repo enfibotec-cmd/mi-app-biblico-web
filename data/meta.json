@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Metadatos bíblicos",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "standard",
+    "language",
+    "encoding",
+    "primary_key",
+    "total_books",
+    "total_ot",
+    "total_nt",
+    "testaments",
+    "aliases_grouping"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "standard": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "const": "es"
+    },
+    "encoding": {
+      "type": "string",
+      "const": "UTF-8"
+    },
+    "primary_key": {
+      "type": "string",
+      "const": "code"
+    },
+    "total_books": {
+      "type": "integer",
+      "const": 66
+    },
+    "total_ot": {
+      "type": "integer",
+      "const": 39
+    },
+    "total_nt": {
+      "type": "integer",
+      "const": 27
+    },
+    "testaments": {
+      "type": "array",
+      "const": ["OT", "NT"]
+    },
+    "aliases_grouping": {
+      "type": "string",
+      "const": "by_book_code"
+    }
+  }
+}

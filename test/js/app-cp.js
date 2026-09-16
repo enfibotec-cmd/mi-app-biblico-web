@@ -112,7 +112,7 @@ window.addEventListener('storage', (event) => {
       console.error('[Biblia App] Error al guardar en LocalStorage (¿cuota excedida?):', e);
       showError('No se pudieron guardar tus notas. Almacenamiento lleno.', null);
     }
-  }, 400);
+  }, 300);
 
   // ==========================================
   // 4. GESTIÓN DE MODO OSCURO (A11y)

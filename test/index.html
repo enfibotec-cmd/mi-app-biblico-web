@@ -1,0 +1,129 @@
+Saltar al contenido
+mi-app-bíblico-web
+Navegación del repositorio
+Código
+Asuntos
+mi-app-bíblico-web
+/índice.html
+enfibotec-cmd
+enfibotec-cmd
+Hace 7 horas
+113 líneas (102 localizaciones) · 3,97 KB
+
+Código
+
+Culpa
+<!DOCTYPE html >
+< html  lang =" es " >
+<cabeza>​​
+  < meta  charset =" UTF-8 " >
+  < meta  name =" viewport " content =" width=device-width, initial-scale=1.0 " >
+  < meta  name =" descripción " content =" Selector Bíblico interactivo para estudio con resumen, análisis y ejercicios prácticos. " >
+  < meta  name =" theme-color " content =" #0d6efd " >
+  < meta  name =" color-scheme " content =" light dark " >
+  
+  <!-- Seguridad -->
+  < meta  http-equiv =" X-UA-Compatible " content =" IE=edge " >
+  < meta  http-equiv =" Content-Security-Policy " content =" default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; " >
+  < meta  http-equiv =" X-Content-Type-Options " content =" nosniff " >
+  < meta  http-equiv =" Referrer-Policy " content =" strict-origin-when-cross-origin " >
+  < meta  http-equiv =" Permissions-Policy " content =" camera=(), microphone=(), geolocation=() " >
+  
+  < título > Selector Bíblico — Estudio Interactivo </ título >
+  
+  <!-- Precarga de recursos críticos -->
+  < link  rel =" preload " href =" src/styles.css " as =" style " >
+  < link  rel =" preload " href =" ./data/manifest.json " as =" fetch " crossorigin >
+  
+  < link  rel =" stylesheet " href =" src/styles.css " >
+  < link  rel =" icon " type =" image/svg+xml " href =" data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg> " >
+</head>​​
+< cuerpo >
+  < header  class =" site-header " >
+    < div  class =" header-container " >
+      < h1  class =" site-title " > 📖 Selector Bíblico </ h1 >
+      < botón 
+        tipo =" botón "
+        id =" themeToggle "
+        clase =" tema-btn "
+        aria-label = " Cambiar a modo oscuro "
+        aria-pressed =" false " >
+        🌙
+      </ botón >
+    </div>​​
+  </encabezado>​​
+
+  < clase principal  =" contenedor principal " >
+    <!-- Banner de estado -->
+    < div 
+      id =" statusBanner "
+      clase =" status-banner hidden "
+      rol =" alerta "
+      aria-live =" educado " >
+    </div>​​
+
+    < section  class =" card " aria-labelledby =" selector-heading " >
+      < h2  id =" selector-heading " class =" visually-hidden " > Selector de pasaje </ h2 >
+      
+      <!-- Filtro por ámbito -->
+      < div  class =" scope-filter-container " >
+        < span  id =" alcance-label " class =" alcance-label " > Ámbito de búsqueda </ span >
+        < div 
+          id =" scopeFilter "
+          clase =" grupo-de-botones-de-ámbito "
+          rol =" grupo "
+          aria-labelledby =" scope-label " >
+          < button  type =" button " class =" scope-btn active " data-scope =" ALL " aria-pressed =" true " >
+            Todos < span  id =" badgeAll " class =" badge " > 66 </ span >
+          </ botón >
+          < button  type =" button " class =" scope-btn " data-scope =" OT " aria-pressed =" false " >
+            AT < span  id =" badgeOT " class =" badge " > 39 </ span >
+          </ botón >
+          < button  type =" button " class =" scope-btn " data-scope =" NT " aria-pressed =" false " >
+            NT < span  id =" badgeNT " class =" badge " > 27 </ span >
+          </ botón >
+        </div>​​
+      </div>​​
+
+      <!-- Selectores -->
+      < div  class =" select-grid " >
+        < div  class =" select-group " >
+          < label  for = " bookSelect " > Libro </label>​
+          < select  id =" bookSelect " aria-required =" true " >
+            < opción  valor ="" > -- Seleccionar Libro -- </ opción >
+          </seleccionar>​​
+        </div>​​
+        < div  class =" select-group " >
+          < label  for = " chapterSelect " > Capítulo </label>​
+          < select  id =" chapterSelect " disabled  aria-required =" true " >
+            < option  value ="" > Selecciona libro primero </ option >
+          </seleccionar>​​
+        </div>​​
+        < div  class =" select-group " >
+          < label  for = " verseSelect " > Versículo </label>​
+          < select  id =" verseSelect " deshabilitado >
+            < option  value ="" > Todo el capítulo </ option >
+          </seleccionar>​​
+        </div>​​
+      </div>​​
+    </ sección >
+
+    <!-- Módulo de pasaje -->
+    < sección 
+      id =" passageDisplay "
+      clase =" tarjeta oculta "
+      aria-etiquetada por =" título-del-pasaje "
+      aria-ocupado =" falso " >
+    </ sección >
+  </main>​​
+
+  < footer  class =" site-footer " >
+    < div  class =" footer-container " >
+      < pequeño > Guardado automático · Datos almacenados localmente </ pequeño >
+    </div>​​
+  </ pie de página >
+
+  < script  src =" src/js / app.js " defer > </script>
+</body>​​
+</html>​​
+ 

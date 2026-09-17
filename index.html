@@ -99,175 +99,105 @@
     </section>
 
     <!-- Módulo Dinámico de Lectura y Análisis -->
-<section id="passageDisplay" class="card" aria-labelledby="passage-title">
-  
-  <!-- Encabezado del Pasaje -->
-  <header class="passage-header">
-    <div class="passage-title-group">
-      <h2 id="passage-title">Juan 3:16</h2>
-      <span class="badge-accent">Nuevo Testamento</span>
-    </div>
-    <div class="meta-info">
-      <span>📖 RVR1960</span>
-    </div>
-  </header>
+    <section id="passageDisplay" class="card" aria-labelledby="passage-title">
 
-  <!-- Texto del Pasaje -->
-  <div class="verses-text">
-    <p><sup>16</sup>Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.</p>
-  </div>
+      <!-- Encabezado del Pasaje -->
+      <header class="passage-header">
+        <div class="passage-title-group">
+          <h2 id="passage-title">Juan 3:16</h2>
+          <span class="badge-accent">Nuevo Testamento</span>
+        </div>
+        <div class="meta-info">
+          <span>📖 RVR1960</span>
+        </div>
+      </header>
 
-  <!-- NAVEGACIÓN DE PESTAÑAS (3 Botones distribuidos) -->
-  <nav class="passage-tabs" role="tablist" aria-label="Secciones de estudio">
-    <button 
-      <!-- Módulo Dinámico de Lectura y Análisis -->
-<section id="passageDisplay" class="card" aria-labelledby="passage-title">
-
-  <!-- Encabezado del Pasaje -->
-  <header class="passage-header">
-    <div class="passage-title-group">
-      <h2 id="passage-title">Juan 3:16</h2>
-      <span class="badge-accent">Nuevo Testamento</span>
-    </div>
-    <div class="meta-info">
-      <span>📖 RVR1960</span>
-    </div>
-  </header>
-
-  <!-- Texto del Pasaje -->
-  <div class="verses-text">
-    <p><sup>16</sup>Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.</p>
-  </div>
-
-  <!-- NAVEGACIÓN DE PESTAÑAS -->
-  <nav class="passage-tabs" role="tablist" aria-label="Secciones de estudio">
-    <button 
-      type="button" 
-      class="tab-btn active" 
-      role="tab" 
-      aria-selected="true" 
-      aria-controls="panel-resumen" 
-      id="tab-resumen">
-      📋 Resumen
-    </button>
-
-    <button 
-      type="button" 
-      class="tab-btn" 
-      role="tab" 
-      aria-selected="false" 
-      aria-controls="panel-analisis" 
-      id="tab-analisis">
-      🔍 Análisis
-    </button>
-
-    <button 
-      type="button" 
-      class="tab-btn" 
-      role="tab" 
-      aria-selected="false" 
-      aria-controls="panel-practica" 
-      id="tab-practica">
-      ✏️ Práctica
-    </button>
-  </nav>
-
-  <!-- PANELES DE CONTENIDO -->
-
-  <!-- Panel 1: Resumen -->
-  <div id="panel-resumen" class="tab-content" role="tabpanel" aria-labelledby="tab-resumen">
-    <p class="summary-text">
-      Este pasaje resume el núcleo del mensaje evangélico: el amor incondicional de Dios demostrado en la entrega de su Hijo para la salvación de la humanidad.
-    </p>
-    <div class="summary-footer">
-      <span>Génesis temática: Amor, Fe, Vida Eterna</span>
-    </div>
-  </div>
-
-  <!-- Panel 2: Análisis -->
-  <div id="panel-analisis" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-analisis">
-    <article class="question-card">
-      <div class="question-header">
-        <span class="badge-focus">Contexto Teológico</span>
+      <!-- Texto del Pasaje -->
+      <div class="verses-text">
+        <p><sup>16</sup>Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.</p>
       </div>
-      <p class="question-body">¿Qué implica la palabra "unigénito" en el contexto de la relación del Padre con el Hijo?</p>
-      <textarea class="form-control" placeholder="Escribe tus reflexiones o notas de análisis aquí..."></textarea>
-    </article>
-  </div>
 
-  <!-- Panel 3: Práctica -->
-  <div id="panel-practica" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-practica">
-    <div class="exercise-header">
-      <span class="badge-time">⏱️ 5 min</span>
-    </div>
+      <!-- NAVEGACIÓN DE PESTAÑAS -->
+      <nav class="passage-tabs" role="tablist" aria-label="Secciones de estudio">
+        <button 
+          type="button" 
+          class="tab-btn active" 
+          role="tab" 
+          aria-selected="true" 
+          aria-controls="panel-resumen" 
+          id="tab-resumen">
+          📋 Resumen
+        </button>
 
-    <p class="exercise-objective">Aplica esta verdad a tu vida cotidiana esta semana.</p>
+        <button 
+          type="button" 
+          class="tab-btn" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="panel-analisis" 
+          id="tab-analisis">
+          🔍 Análisis
+        </button>
 
-    <ul class="checklist-group">
-      <li class="checklist-item">
-        <label class="checkbox-label">
-          <input type="checkbox">
-          <span>Identifica una persona a quien puedas demostrar amor incondicional hoy.</span>
-        </label>
-      </li>
-    </ul>
+        <button 
+          type="button" 
+          class="tab-btn" 
+          role="tab" 
+          aria-selected="false" 
+          aria-controls="panel-practica" 
+          id="tab-practica">
+          ✏️ Práctica
+        </button>
+      </nav>
 
-    <div class="deliverable-box">
-      <span class="deliverable-label">📌 Acción Personal</span>
-      <textarea class="form-control" placeholder="¿Qué paso concreto vas a dar hoy?"></textarea>
-      <span class="save-status">Guardado automáticamente</span>
-    </div>
-  </div>
+      <!-- PANELES DE CONTENIDO -->
 
-</section>
-
-  <!-- PANELS DE CONTENIDO -->
-  
-  <!-- Panel 1: Resumen -->
-  <div id="panel-resumen" class="tab-content" role="tabpanel" aria-labelledby="tab-resumen">
-    <p class="summary-text">
-      Este pasaje resume el núcleo del mensaje evangélico: el amor incondicional de Dios demostrado en la entrega de su Hijo para la salvación de la humanidad.
-    </p>
-    <div class="summary-footer">
-      <span>Génesis temático: Amor, Fe, Vida Eterna</span>
-    </div>
-  </div>
-
-  <!-- Panel 2: Análisis -->
-  <div id="panel-analisis" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-analisis">
-    <article class="question-card">
-      <div class="question-header">
-        <span class="badge-focus">Contexto Teológico</span>
+      <!-- Panel 1: Resumen -->
+      <div id="panel-resumen" class="tab-content" role="tabpanel" aria-labelledby="tab-resumen">
+        <p class="summary-text">
+          Este pasaje resume el núcleo del mensaje evangélico: el amor incondicional de Dios demostrado en la entrega de su Hijo para la salvación de la humanidad.
+        </p>
+        <div class="summary-footer">
+          <span>Génesis temático: Amor, Fe, Vida Eterna</span>
+        </div>
       </div>
-      <p class="question-body">¿Qué implica la palabra "unigénito" en el contexto de la relación del Padre con el Hijo?</p>
-      <textarea class="form-control" placeholder="Escribe tus reflexiones o notas de análisis aquí..."></textarea>
-    </article>
-  </div>
 
-  <!-- Panel 3: Práctica -->
-  <div id="panel-practica" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-practica">
-    <div class="exercise-header">
-      <span class="badge-time">⏱️ 5 min</span>
-    </div>
-    <p class="exercise-objective">Aplica esta verdad a tu vida cotidiana esta semana.</p>
-    
-    <ul class="checklist-group">
-      <li class="checklist-item">
-        <label class="checkbox-label">
-          <input type="checkbox">
-          <span>Identifica una persona a quien puedas demostrar amor incondicional hoy.</span>
-        </label>
-      </li>
-    </ul>
-    
-    <div class="deliverable-box">
-      <span class="deliverable-label">📌 Acción Personal</span>
-      <textarea class="form-control" placeholder="¿Qué paso concreto vas a dar hoy?"></textarea>
-      <span class="save-status">Guardado automáticamente</span>
-    </div>
-  </div>
+      <!-- Panel 2: Análisis -->
+      <div id="panel-analisis" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-analisis">
+        <article class="question-card">
+          <div class="question-header">
+            <span class="badge-focus">Contexto Teológico</span>
+          </div>
+          <p class="question-body">¿Qué implica la palabra "unigénito" en el contexto de la relación del Padre con el Hijo?</p>
+          <textarea class="form-control" placeholder="Escribe tus reflexiones o notas de análisis aquí..."></textarea>
+        </article>
+      </div>
 
-</section>
+      <!-- Panel 3: Práctica -->
+      <div id="panel-practica" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-practica">
+        <div class="exercise-header">
+          <span class="badge-time">⏱️ 5 min</span>
+        </div>
+
+        <p class="exercise-objective">Aplica esta verdad a tu vida cotidiana esta semana.</p>
+
+        <ul class="checklist-group">
+          <li class="checklist-item">
+            <label class="checkbox-label">
+              <input type="checkbox">
+              <span>Identifica una persona a quien puedas demostrar amor incondicional hoy.</span>
+            </label>
+          </li>
+        </ul>
+
+        <div class="deliverable-box">
+          <span class="deliverable-label">📌 Acción Personal</span>
+          <textarea class="form-control" placeholder="¿Qué paso concreto vas a dar hoy?"></textarea>
+          <span class="save-status">Guardado automáticamente</span>
+        </div>
+      </div>
+
+    </section>
 
   </main>
 

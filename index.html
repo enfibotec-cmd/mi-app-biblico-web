@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Selector Bíblico interactivo para estudio con resumen, análisis y ejercicios prácticos.">
-  <meta name="theme-color" content="#0d6efd">
+  <meta name="theme-color" content="#2563eb">
   <meta name="color-scheme" content="light dark">
-  
-  <!-- Seguridad -->
+
+  <!-- Seguridad y CSP -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
-  
+
   <title>Selector Bíblico — Estudio Interactivo</title>
-  
-  <!-- Preload de recursos críticos -->
+
+  <!-- Precarga de recursos y estilos -->
   <link rel="preload" href="src/styles.css" as="style">
-  <link rel="preload" href="./data/manifest.json" as="fetch" crossorigin>
-  
   <link rel="stylesheet" href="src/styles.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
 </head>
 <body>
+
+  <!-- Cabecera principal -->
   <header class="site-header">
     <div class="header-container">
       <h1 class="site-title">📖 Selector Bíblico</h1>
@@ -31,15 +31,17 @@
         type="button" 
         id="themeToggle" 
         class="theme-btn" 
-        aria-label="Cambiar a modo oscuro"
+        aria-label="Cambiar a modo oscuro" 
         aria-pressed="false">
         🌙
       </button>
     </div>
   </header>
 
+  <!-- Contenido principal -->
   <main class="main-container">
-    <!-- Banner de estado -->
+
+    <!-- Banner de Estado / Errores -->
     <div 
       id="statusBanner" 
       class="status-banner hidden" 
@@ -47,10 +49,11 @@
       aria-live="polite">
     </div>
 
+    <!-- Panel de Selección -->
     <section class="card" aria-labelledby="selector-heading">
-      <h2 id="selector-heading" class="visually-hidden">Selector de pasaje</h2>
-      
-      <!-- Filtro por ámbito -->
+      <h2 id="selector-heading" class="visually-hidden">Selector de pasaje bíblico</h2>
+
+      <!-- Filtro por Ámbito -->
       <div class="scope-filter-container">
         <span id="scope-label" class="scope-label">Ámbito de búsqueda</span>
         <div 
@@ -59,55 +62,61 @@
           role="group" 
           aria-labelledby="scope-label">
           <button type="button" class="scope-btn active" data-scope="ALL" aria-pressed="true">
-            Todos <span id="badgeAll" class="badge">66</span>
+            <span class="label">Todos</span> <span id="badgeAll" class="badge">66</span>
           </button>
           <button type="button" class="scope-btn" data-scope="OT" aria-pressed="false">
-            AT <span id="badgeOT" class="badge">39</span>
+            <span class="label">AT</span> <span id="badgeOT" class="badge">39</span>
           </button>
           <button type="button" class="scope-btn" data-scope="NT" aria-pressed="false">
-            NT <span id="badgeNT" class="badge">27</span>
+            <span class="label">NT</span> <span id="badgeNT" class="badge">27</span>
           </button>
         </div>
       </div>
 
-      <!-- Selectores -->
-      <div class="select-grid">
+      <!-- Grid de Selectores Formulario -->
+      <div class="select-grid" role="search">
         <div class="select-group">
           <label for="bookSelect">Libro</label>
-          <select id="bookSelect" aria-required="true">
+          <select id="bookSelect" aria-required="true" aria-controls="chapterSelect">
             <option value="">-- Seleccionar Libro --</option>
           </select>
         </div>
+
         <div class="select-group">
           <label for="chapterSelect">Capítulo</label>
-          <select id="chapterSelect" disabled aria-required="true">
+          <select id="chapterSelect" disabled aria-required="true" aria-controls="verseSelect">
             <option value="">Selecciona libro primero</option>
           </select>
         </div>
+
         <div class="select-group">
           <label for="verseSelect">Versículo</label>
-          <select id="verseSelect" disabled>
+          <select id="verseSelect" disabled aria-controls="passageDisplay">
             <option value="">Todo el capítulo</option>
           </select>
         </div>
       </div>
     </section>
 
-    <!-- Módulo de pasaje -->
+    <!-- Módulo Dinámico de Lectura y Análisis -->
     <section 
       id="passageDisplay" 
       class="card hidden" 
-      aria-labelledby="passage-title"
-      aria-busy="false">
+      aria-labelledby="passage-title" 
+      aria-busy="false" 
+      aria-live="polite">
     </section>
+
   </main>
 
+  <!-- Pie de página -->
   <footer class="site-footer">
     <div class="footer-container">
       <small>Guardado automático · Datos almacenados localmente</small>
     </div>
   </footer>
 
+  <!-- Script Principal -->
   <script src="src/js/app.js" defer></script>
 </body>
 </html>
